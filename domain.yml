@@ -5,24 +5,28 @@ session_config:
   carry_over_slots_to_new_session: false
 
 intents:
-- connected
-- disconnected
-- asr_low_confidence
-- inform
-- goodbye
-- affirm
-- deny
-- faq
-- application
-- annex
-
-#entities:
+  - connected
+  - disconnected
+  - asr_low_confidence
+  - inform
+  - goodbye
+  - affirm
+  - deny
+  - faq
+  - application
+  - annex
+  - agent_question_general
+  - agent_question_payments
+  - agent_question_validity
 
 slots:
   agent_authenticated:
     type: bool
     influence_conversation: true
-  confirm_authentication_form:
+  agent_question_path:
+    type: any
+    influence_conversation: false
+  given_agent_number:
     type: any
     influence_conversation: false
   given_agent_pesel:
@@ -76,7 +80,7 @@ slots:
   service_phone_number:
     type: any
     influence_conversation: false
-  system_agent_name:
+  system_agent_number:
     type: any
     influence_conversation: false
   system_agent_pesel:
@@ -93,121 +97,247 @@ slots:
     influence_conversation: false
 
 actions:
-- action_restarted
-- action_low_confidence
-- action_session_start
-- action_perform_agent_authentication
-- action_out_of_scope
-- validate_incident_number_form
-- validate_agent_authentication_form
+  - action_restarted
+  - action_low_confidence
+  - action_session_start
+  - action_perform_agent_authentication
+  - action_out_of_scope
+  - action_select_utter_agent_question_bot_info
+  - action_set_agent_question_path
+  - validate_insurance_number_form
+  - validate_agent_authentication_form
 
 forms:
   insurance_number_form:
     required_slots:
       insurance_number_verified:
-      - type: from_text
+        - type: from_text
 
   agent_authentication_form:
     required_slots:
       given_agent_number:
-      - type: from_text
+        - type: from_text
       given_agent_pesel:
-      - type: from_text
+        - type: from_text
 
 responses:
   # UTTER -----------------------------------------------------------------------------
   utter_error:
-  - channel: conpeek-voice
-    custom:
-      blocks:
-      - text: "Coś poszło nie tak. To jest komunikat diagnostyczny."
-  - text: "Coś poszło nie tak. To jest komunikat diagnostyczny."
+    - channel: conpeek-voice
+      custom:
+        blocks:
+          - text: 'Coś poszło nie tak. To jest komunikat diagnostyczny.'
+    - channel: conpeek-text
+      custom:
+        blocks:
+          - text: 'Coś poszło nie tak. To jest komunikat diagnostyczny.'
+            typing_delay: 2000
+    - text: 'Coś poszło nie tak. To jest komunikat diagnostyczny.'
 
   # UTTER -----------------------------------------------------------------------------
   utter_greet:
-  - channel: conpeek-voice
-    custom:
-      blocks:
-      - text: "W czym mogę pomóc?"
-  - text: "W czym mogę pomóc?"
+    - channel: conpeek-voice
+      custom:
+        blocks:
+          - text: 'W czym mogę pomóc?'
+    - channel: conpeek-text
+      custom:
+        blocks:
+          - text: 'W czym mogę pomóc?'
+            typing_delay: 1000
+    - text: 'W czym mogę pomóc?'
 
   # UTTER -----------------------------------------------------------------------------
   utter_goodbye:
-  - channel: conpeek-voice
-    custom:
-      blocks:
-      - text: "Do widzenia."
-      end_of_conversation:
-  - text: "Do widzenia."
+    - channel: conpeek-voice
+      custom:
+        blocks:
+          - text: 'Do widzenia.'
+        end_of_conversation:
+    - channel: conpeek-text
+      custom:
+        blocks:
+          - text: 'Do widzenia.'
+            typing_delay: 2000
+        end_of_conversation:
+    - text: 'Do widzenia.'
 
   # UTTER -----------------------------------------------------------------------------
   utter_agent_care_transfer:
+    - channel: conpeek-voice
+      custom:
+        blocks:
+          - text: 'Kieruję połączenie do konsultanta.'
+        end_of_conversation:
+          export:
+            next_action: 'project'
+            project_name: 'Agent Care'
+    - channel: conpeek-text
+      custom:
+        blocks:
+          - text: 'Kieruję połączenie do konsultanta.'
+            typing_delay: 2000
+        end_of_conversation:
+          export:
+            next_action: 'project'
+            project_name: 'Agent Care'
+    - text: 'Kieruję połączenie do konsultanta.'
+
+  # UTTER -----------------------------------------------------------------------------
+  utter_annex_clarify:
+    - channel: conpeek-voice
+      custom:
+        blocks:
+          - text: 'Doprecyzuj proszę swoje pytanie.'
+    - channel: conpeek-text
+      custom:
+        blocks:
+          - text: 'Doprecyzuj proszę swoje pytanie.'
+            typing_delay: 2000
+    - text: 'Doprecyzuj proszę swoje pytanie.'
+
+  # UTTER -----------------------------------------------------------------------------
+  utter_application_clarify:
+    - channel: conpeek-voice
+      custom:
+        blocks:
+          - text: 'Doprecyzuj proszę swoje pytanie.'
+    - channel: conpeek-text
+      custom:
+        blocks:
+          - text: 'Doprecyzuj proszę swoje pytanie.'
+            typing_delay: 2000
+    - text: 'Doprecyzuj proszę swoje pytanie.'
+
+  # UTTER -----------------------------------------------------------------------------
+  utter_agent_question_payment_done:
   - channel: conpeek-voice
     custom:
       blocks:
-      - text: ""
+      - text: "Wszystkie płatności zostały zaksięgowane. Dziękuję za rozmowę."
       end_of_conversation:
-        export:
-          next_action: "project"
-          project_name: "Agent Care"
-  - text: ""
+  - channel: conpeek-text
+    custom:
+      blocks:
+      - text: "Wszystkie płatności zostały zaksięgowane. Dziękuję za rozmowę."
+      end_of_conversation:
+  - text: "Wszystkie płatności zostały zaksięgowane. Dziękuję za rozmowę."
+
+  # UTTER -----------------------------------------------------------------------------
+  utter_agent_question_payment_waiting:
+  - channel: conpeek-voice
+    custom:
+      blocks:
+      - text: 'Do zapłaty jest {next_installment_number} rata w wysokości {next_installment_amount}. Termin płatności to {next_installment_date}.'
+        ssml: 'Do zapłaty jest <say-as interpret-as="ordinal">{next_installment_number}</say-as> rata w wysokości {next_installment_amount}. Termin płatności to <say-as interpret-as="date" format="yyyy-mm-dd">{next_installment_date}</say-as>.'
+      end_of_conversation:
+  - channel: conpeek-text
+    custom:
+      blocks:
+      - text: 'Do zapłaty jest {next_installment_number} rata w wysokości {next_installment_amount} złotych. Termin płatności to {next_installment_date}.'
+      end_of_conversation:
+  - text: 'Do zapłaty jest {next_installment_number} rata w wysokości {next_installment_amount} złotych. Termin płatności to {next_installment_date}.'
+
+  # UTTER -----------------------------------------------------------------------------
+  utter_agent_question_insurance_active:
+  - channel: conpeek-voice
+    custom:
+      blocks:
+      - text: 'Polisa jest aktywna do dnia {insurance_end_date}.'
+        ssml: 'Polisa jest aktywna do dnia <say-as interpret-as="date" format="yyyy-mm-dd">{insurance_end_date}</say-as>.'
+      end_of_conversation:
+  - channel: conpeek-text
+    custom:
+      blocks:
+      - text: 'Polisa jest aktywna do dnia {insurance_end_date}.'
+      end_of_conversation:
+  - text: 'Polisa jest aktywna do dnia {insurance_end_date}.'
+
+  # UTTER -----------------------------------------------------------------------------
+  utter_agent_question_insurance_inactive:
+  - channel: conpeek-voice
+    custom:
+      blocks:
+      - text: 'Twoja polisa jest już nieaktywna. Jej ważność upłynęła w dniu {insurance_end_date}.'
+        ssml: 'Twoja polisa jest już nieaktywna. Jej ważność upłynęła w dniu <say-as interpret-as="date" format="yyyy-mm-dd">{insurance_end_date}</say-as>.'
+  - channel: conpeek-text
+    custom:
+      blocks:
+      - text: 'Twoja polisa jest już nieaktywna. Jej ważność upłynęła w dniu {insurance_end_date}.'
+      end_of_conversation:
+  - text: 'Twoja polisa jest już nieaktywna. Jej ważność upłynęła w dniu {insurance_end_date}.'
 
 
   # ---------------------- FORM INSURANCE NUMBER ------------------------------------------
   # UTTER -----------------------------------------------------------------------------
   utter_ask_insurance_number_form_insurance_number_verified:
-  - channel: conpeek-voice
-    custom:
-      blocks:
-      - text: "Podaj proszę numer polisy."
-        sentence_time_max: 30000
-        sentence_end_silence_time: 3000
-        speech_contexts:
-        - phrases:
-            - "$OPERAND"
-        text_conditional_actions:
-        -  regexp: "[0-9]{12}$"
-           end_sentence: True
-           dtmf_timeout: 5
-           remove_whitespace: True
-  - text: "Podaj proszę numer polisy."
+    - channel: conpeek-voice
+      custom:
+        blocks:
+          - text: 'Podaj proszę numer polisy.'
+            sentence_time_max: 30000
+            sentence_end_silence_time: 3000
+            speech_contexts:
+              - phrases:
+                  - '$OPERAND'
+            text_conditional_actions:
+              -  regexp: '[0-9]{12}$'
+                 end_sentence: True
+                 dtmf_timeout: 5
+                 remove_whitespace: True
+    - channel: conpeek-text
+      custom:
+        blocks:
+          - text: 'Podaj proszę numer polisy.'
+            typing_delay: 1000
+    - text: 'Podaj proszę numer polisy.'
 
   # ---------------------- FORM AGENT AUTHENTICATION ------------------------------------------
   # UTTER -----------------------------------------------------------------------------
+  utter_ask_agent_authentication_form_given_agent_number:
+    - channel: conpeek-voice
+      custom:
+        blocks:
+          - text: 'Podaj proszę numer pośrednika.'
+            sentence_time_max: 30000
+            sentence_end_silence_time: 3000
+            speech_contexts:
+              - phrases:
+                  - "$OPERAND"
+            text_conditional_actions:
+              -  regexp: '[0-9]{11}$'
+                 end_sentence: True
+                 dtmf_timeout: 5
+                 remove_whitespace: True
+    - channel: conpeek-text
+      custom:
+        blocks:
+          - text: 'Podaj proszę numer pośrednika.'
+            typing_delay: 1000
+    - text: 'Podaj proszę numer pośrednika.'
+
   # UTTER -----------------------------------------------------------------------------
-  utter_ask_agent_authentication_form_agent_number:
+  utter_ask_agent_authentication_form_given_agent_pesel:
   - channel: conpeek-voice
     custom:
       blocks:
-      - text: "Podaj proszę numer pośrednika."
-        sentence_time_max: 30000
-        sentence_end_silence_time: 3000
-        speech_contexts:
-        - phrases:
-            - "$OPERAND"
-        text_conditional_actions:
-        -  regexp: "[0-9]{11}$"
-           end_sentence: True
-           dtmf_timeout: 5
-           remove_whitespace: True
-  - text: "Podaj proszę numer pośrednika."
-  # UTTER -----------------------------------------------------------------------------
-  utter_ask_agent_authentication_form_agent_pesel:
-  - channel: conpeek-voice
+        - text: 'Podaj proszę swój numer pesel.'
+          sentence_time_max: 30000
+          sentence_end_silence_time: 3000
+          speech_contexts:
+            - phrases:
+                - '$OPERAND'
+          text_conditional_actions:
+            -  regexp: '[0-9]{11}$'
+               end_sentence: True
+               dtmf_timeout: 5
+               remove_whitespace: True
+  - channel: conpeek-text
     custom:
       blocks:
-      - text: "Podaj proszę swój numer pesel."
-        sentence_time_max: 30000
-        sentence_end_silence_time: 3000
-        speech_contexts:
-        - phrases:
-            - "$OPERAND"
-        text_conditional_actions:
-        -  regexp: "[0-9]{11}$"
-           end_sentence: True
-           dtmf_timeout: 5
-           remove_whitespace: True
-  - text: "Podaj proszę swój numer pesel."
+        - text: 'Podaj proszę swój numer pesel.'
+          typing_delay: 1000
+  - text: 'Podaj proszę swój numer pesel.'
 
   # ---------------------- FAQ SECTION ------------------------------------------------
   # UTTER -----------------------------------------------------------------------------
@@ -215,209 +345,281 @@ responses:
   - channel: conpeek-voice
     custom:
       blocks:
-        - text: "Po użyciu przycisku Wyślij do akceptacji można zawrzeć w nim komentarz w dedykowanym polu."
+        - text: 'Po użyciu przycisku Wyślij do akceptacji można zawrzeć w nim komentarz w dedykowanym polu.'
       end_of_conversation:
   - channel: conpeek-text
     custom:
       blocks:
-        - text: "Podczas wysyłki aneksu do CUUD można zawrzeć w nim komentarz w dedykowanym polu po użyciu przycisku Wyślij do akceptacji."
+        - text: 'Podczas wysyłki aneksu do CUUD można zawrzeć w nim komentarz w dedykowanym polu po użyciu przycisku Wyślij do akceptacji.'
+          typing_delay: 2000
       end_of_conversation:
-  - text: "Po użyciu przycisku Wyślij do akceptacji można zawrzeć w nim komentarz w dedykowanym polu."
+  - text: 'Po użyciu przycisku Wyślij do akceptacji można zawrzeć w nim komentarz w dedykowanym polu.'
 
   # UTTER -----------------------------------------------------------------------------
   utter_faq/annex_resend:
   - channel: conpeek-voice
     custom:
       blocks:
-        - text: "Po uzupełnieniu danych można go ponownie odesłać używając opcji Wyślij do akceptacji, tak, jak podczas jego pierwszej wysyłki."
+        - text: 'Po uzupełnieniu danych można go ponownie odesłać używając opcji Wyślij do akceptacji, tak, jak podczas jego pierwszej wysyłki.'
       end_of_conversation:
   - channel: conpeek-text
     custom:
       blocks:
-        - text: "Gdy aneks wróci od CUUD bez akceptacji lub odrzucenia, a z prośbą o więcej danych, trafia do zakładki Oferty, skąd, po wprowadzeniu zmian, dostarczeniu informacji wymaganych przez CUUD, można go ponownie odesłać używając opcji Wyślij do akceptacji, tak, jak podczas jego pierwszej wysyłki."
+        - text: 'Gdy aneks wróci od CUUD bez akceptacji lub odrzucenia, a z prośbą o więcej danych, trafia do zakładki Oferty, skąd, po wprowadzeniu zmian, dostarczeniu informacji wymaganych przez CUUD, można go ponownie odesłać używając opcji Wyślij do akceptacji, tak, jak podczas jego pierwszej wysyłki.'
+          typing_delay: 2000
       end_of_conversation:
-  - text: "Po uzupełnieniu danych można go ponownie odesłać używając opcji Wyślij do akceptacji, tak, jak podczas jego pierwszej wysyłki."
+  - text: 'Po uzupełnieniu danych można go ponownie odesłać używając opcji Wyślij do akceptacji, tak, jak podczas jego pierwszej wysyłki.'
 
   # UTTER -----------------------------------------------------------------------------
   utter_faq/annex_types:
   - channel: conpeek-voice
     custom:
       blocks:
-        - text: "W systemie mamy wiele aneksów więc wysyłam Ci wiadomość SMS z linkiem do interesujących Cię informacji."
+        - text: 'W systemie mamy wiele aneksów więc wysyłam Ci wiadomość SMS z linkiem do interesujących Cię informacji.'
       end_of_conversation:
   - channel: conpeek-text
     custom:
       blocks:
-        - text: "Aneksy do polis wystawionych poprzez eAgent dostępne w aplikacji, to:  Dla produktu komunikacyjnego: - zmiana danych klienta, - zmiana ubezpieczonych, - zmiana danych przedmiotu ubezpieczenia, - zmiana sumy ubezpieczenia, - zmiana sposobu użytkowania pojazdu, - zmiana w płatnościach, Dla produktu mieszkaniowego: - zmiana danych klienta, - zmiana ubezpieczonych, - korekta adresu przedmiotu ubezpieczenia, - zmiana charakterystyki przedmiotu ubezpieczenia, - zmiana sumy ubezpieczenia, - zmiana w płatnościach,  a także:  - wystawienie oraz wycofanie cesji.Pozostałe należy wystawić w AUW uprzednio rejestrując polisę w Warta XXI. Dowiedz się więcej na https://wiedza.warta.pl/wdrazamy-aneksy/"
+        - text: 'Aneksy do polis wystawionych poprzez eAgent dostępne w aplikacji, to:'
+          typing_delay: 2000
+        - text: 'Dla produktu komunikacyjnego: <li>zmiana danych klienta <li>zmiana ubezpieczonych <li>zmiana danych przedmiotu ubezpieczenia <li>zmiana sumy ubezpieczenia <li>zmiana sposobu użytkowania pojazdu <li>zmiana w płatnościach'
+          typing_delay: 2000
+        - text: 'Dla produktu mieszkaniowego: <li>zmiana danych klienta <li>zmiana ubezpieczonych <li>korekta adresu przedmiotu ubezpieczenia <li>zmiana charakterystyki przedmiotu ubezpieczenia <li>zmiana sumy ubezpieczenia <li>zmiana w płatnościach <li>wystawienie oraz wycofanie cesji'
+          typing_delay: 2000
+        - text: 'Pozostałe należy wystawić w AUW uprzednio rejestrując polisę w Warta XXI.'
+          typing_delay: 2000
+        - text: 'Dowiedz się więcej...'
+          typing_delay: 2000
+        - text: 'https://wiedza.warta.pl/wdrazamy-aneksy/'
+          typing_delay: 2000
       end_of_conversation:
-  - text: "W systemie mamy wiele aneksów więc wysyłam Ci wiadomość SMS z linkiem do interesujących Cię informacji."
+  - text: 'W systemie mamy wiele aneksów więc wysyłam Ci wiadomość SMS z linkiem do interesujących Cię informacji.'
 
   # UTTER -----------------------------------------------------------------------------
-  utter_faqfaq/annex_recalculation:
+  utter_faq/annex_recalculation:
   - channel: conpeek-voice
     custom:
       blocks:
-        - text: "Na ten moment aneks rekalkulacyjny nie jest dostępny w eAgent, taki aneks należy wystawić w AUW."
+        - text: 'Na ten moment aneks rekalkulacyjny nie jest dostępny w eAgent, taki aneks należy wystawić w AUW.'
       end_of_conversation:
   - channel: conpeek-text
     custom:
       blocks:
-        - text: "Na ten moment aneks rekalkulacyjny nie jest dostępny w eAgent, taki aneks należy wystawić w AUW."
+        - text: 'Na ten moment aneks rekalkulacyjny nie jest dostępny w eAgent.'
+          typing_delay: 2000
+        - text: 'Taki aneks należy wystawić w AUW.'
+          typing_delay: 2000
       end_of_conversation:
-  - text: "Na ten moment aneks rekalkulacyjny nie jest dostępny w eAgent, taki aneks należy wystawić w AUW."
+  - text: 'Na ten moment aneks rekalkulacyjny nie jest dostępny w eAgent, taki aneks należy wystawić w AUW.'
 
   # UTTER -----------------------------------------------------------------------------
-  utter_faqfaq/annex_creation:
+  utter_faq/annex_creation:
   - channel: conpeek-voice
     custom:
       blocks:
-        - text: "W systemie mamy wiele aneksów więc wysyłam Ci wiadomość SMS z linkiem do interesujących Cię informacji."
+        - text: 'W systemie mamy wiele aneksów więc wysyłam Ci wiadomość SMS z linkiem do interesujących Cię informacji.'
       end_of_conversation:
   - channel: conpeek-text
     custom:
       blocks:
-        - text: "Aneks w systemie eAgent można wykonać tylko dla polisy wystawionej w systemie eAgent poprzez menu Czynności z poziomu listy polis klikając opcję <Wystaw aneks>,  bądź przechodząc do zakładki czynności z widoku 360 polisy - obsługa posprzedażowa - <Aneks>. Po wybraniu rodzaju aneksu i dokonaniu zmiany, należy użyć opcji Zatwierdź zmianę, a następnie Wystaw aneks.   Istnieje możliwość edytowania zmian na aneksie przed jego wystawieniem. Służą do tego przyciski: lupy, który umożliwia podgląd aneksu do wystawienia oraz x, który umożliwia usunięcie kalkulowanego aneksu. Dowiedz się więcej na https://wiedza.warta.pl/wdrazamy-aneksy/"
+        - text: 'Aneks w systemie eAgent można wykonać tylko dla polisy wystawionej w systemie eAgent poprzez menu Czynności z poziomu listy polis klikając opcję "Wystaw aneks",  bądź przechodząc do zakładki czynności z widoku 360 polisy - obsługa posprzedażowa - "Aneks".'
+          typing_delay: 2000
+        - text: 'Po wybraniu rodzaju aneksu i dokonaniu zmiany, należy użyć opcji Zatwierdź zmianę, a następnie Wystaw aneks.'
+          typing_delay: 2000
+        - text: 'Istnieje możliwość edytowania zmian na aneksie przed jego wystawieniem.'
+          typing_delay: 2000
+        - text: 'Służą do tego przyciski: <li>lupy, który umożliwia podgląd aneksu do wystawienia oraz <li>x, który umożliwia usunięcie kalkulowanego aneksu.'
+          typing_delay: 2000
+        - text: 'Dowiedz się więcej...'
+          typing_delay: 2000
+        - text: 'https://wiedza.warta.pl/wdrazamy-aneksy/'
+          typing_delay: 2000
       end_of_conversation:
-  - text: "W systemie mamy wiele aneksów więc wysyłam Ci wiadomość SMS z linkiem do interesujących Cię informacji."
+  - text: 'W systemie mamy wiele aneksów więc wysyłam Ci wiadomość SMS z linkiem do interesujących Cię informacji.'
 
   # UTTER -----------------------------------------------------------------------------
-  utter_faqfaq/annex_extra_smart:
+  utter_faq/annex_extra_smart:
   - channel: conpeek-voice
     custom:
       blocks:
-        - text: "Możliwość wystawieia aneksu jest tylko w AUW, po wcześniejszym zarejestrowaniu polisy"
+        - text: 'Możliwość wystawieia aneksu jest tylko w AUW, po wcześniejszym zarejestrowaniu polisy'
       end_of_conversation:
   - channel: conpeek-text
     custom:
       blocks:
-        - text: "Możliwość wystawieia aneksu jest tylko w AUW, po wcześniejszym zarejestrowaniu polisy"
+        - text: 'Możliwość wystawieia aneksu jest tylko w AUW, po wcześniejszym zarejestrowaniu polisy'
+          typing_delay: 2000
       end_of_conversation:
-  - text: "Możliwość wystawieia aneksu jest tylko w AUW, po wcześniejszym zarejestrowaniu polisy"
+  - text: 'Możliwość wystawieia aneksu jest tylko w AUW, po wcześniejszym zarejestrowaniu polisy'
 
   # UTTER -----------------------------------------------------------------------------
-  utter_faqfaq/annex_attachment:
+  utter_faq/annex_attachment:
   - channel: conpeek-voice
     custom:
       blocks:
-        - text: "Załącznik możesz dodać w zakładce Załączniki na widoku 360 polisy, do której przygotowywany jest aneks, informując o dodanym pliku CUUD poprzez kompetencję Inne odstępstwa."
+        - text: 'Załącznik możesz dodać w zakładce Załączniki na widoku 360 polisy, do której przygotowywany jest aneks, informując o dodanym pliku CUUD poprzez kompetencję Inne odstępstwa.'
       end_of_conversation:
   - channel: conpeek-text
     custom:
       blocks:
-        - text: "Jeśli podczas wysyłki aneksu do CUUD wiemy, że wymagany będzie jakiś załącznik do polisy lub CUUD odsyła wniosek z odpowiednią prośbą załącznik, możemy dodać w zakładce Załączniki na widoku 360 polisy, do której przygotowywany jest aneks, informując o dodanym pliku CUUD poprzez kompetencję Inne odstępstwa."
+        - text: 'Jeśli podczas wysyłki aneksu do CUUD wiemy, że wymagany będzie jakiś załącznik do polisy lub CUUD odsyła wniosek z odpowiednią prośbą załącznik, możemy dodać w zakładce Załączniki na widoku 360 polisy, do której przygotowywany jest aneks, informując o dodanym pliku CUUD poprzez kompetencję Inne odstępstwa.'
+          typing_delay: 2000
       end_of_conversation:
-  - text: "Załącznik możesz dodać w zakładce Załączniki na widoku 360 polisy, do której przygotowywany jest aneks, informując o dodanym pliku CUUD poprzez kompetencję Inne odstępstwa."
+  - text: 'Załącznik możesz dodać w zakładce Załączniki na widoku 360 polisy, do której przygotowywany jest aneks, informując o dodanym pliku CUUD poprzez kompetencję Inne odstępstwa.'
 
   # UTTER -----------------------------------------------------------------------------
-  utter_faqfaq/annex_foreign_approval:
+  utter_faq/annex_foreign_approval:
   - channel: conpeek-voice
     custom:
       blocks:
-        - text: "Akcje dotyczące zatwierdzania i anulowania zostały dodane do Widoku polisy w zakladce Czynności, dzięki czemu będzie można zatwierdzać/anulować operacje wykonane na polisie obcej. UWAGA! Każda z akcji będzie dostępna tylko dla agenta, który wykonał daną operację."
+        - text: 'Akcje dotyczące zatwierdzania i anulowania zostały dodane do Widoku polisy w zakladce Czynności, dzięki czemu będzie można zatwierdzać/anulować operacje wykonane na polisie obcej. UWAGA! Każda z akcji będzie dostępna tylko dla agenta, który wykonał daną operację."'
       end_of_conversation:
   - channel: conpeek-text
     custom:
       blocks:
-        - text: "Akcje dotyczące zatwierdzania i anulowania zostały dodane do Widoku polisy w zakladce Czynności, dzięki czemu będzie można zatwierdzać/anulować operacje wykonane na polisie obcej. UWAGA! Każda z akcji będzie dostępna tylko dla agenta, który wykonał daną operację."
+        - text: 'Akcje dotyczące zatwierdzania i anulowania zostały dodane do Widoku polisy w zakladce Czynności, dzięki czemu będzie można zatwierdzać/anulować operacje wykonane na polisie obcej.'
+          typing_delay: 2000
+        - text: 'UWAGA!'
+          typing_delay: 2000
+        - text: 'Każda z akcji będzie dostępna tylko dla agenta, który wykonał daną operację.'
+          typing_delay: 2000
       end_of_conversation:
-  - text: "Akcje dotyczące zatwierdzania i anulowania zostały dodane do Widoku polisy w zakladce Czynności, dzięki czemu będzie można zatwierdzać/anulować operacje wykonane na polisie obcej. UWAGA! Każda z akcji będzie dostępna tylko dla agenta, który wykonał daną operację."
+  - text: 'Akcje dotyczące zatwierdzania i anulowania zostały dodane do Widoku polisy w zakladce Czynności, dzięki czemu będzie można zatwierdzać/anulować operacje wykonane na polisie obcej. UWAGA! Każda z akcji będzie dostępna tylko dla agenta, który wykonał daną operację.'
 
   # UTTER -----------------------------------------------------------------------------
-  utter_faqfaq/application_aztec:
+  utter_faq/application_aztec:
   - channel: conpeek-voice
     custom:
       blocks:
-        - text: "Dostęp do aplikacji Warta Agent można uzyskać poprzez zalogowanie się do sklepu Google Play lub Apple App Store, gdzie można ją bezpłatnie pobrać. Pełna instrukcja korzystania z aplikacji jest dostępna w Bazie Wiedzy. Wysyłam Ci SMS z linkiem Bazy Wiedzy."
+        - text: 'Dostęp do aplikacji Warta Agent można uzyskać poprzez zalogowanie się do sklepu Google Play lub Apple App Store, gdzie można ją bezpłatnie pobrać. Pełna instrukcja korzystania z aplikacji jest dostępna w Bazie Wiedzy. Wysyłam Ci SMS z linkiem Bazy Wiedzy.'
       end_of_conversation:
   - channel: conpeek-text
     custom:
       blocks:
-        - text: "Dostęp do aplikacji Warta Agent można uzyskać poprzez zalogowanie się do sklepu Google Play lub Apple App Store, gdzie można ją bezpłatnie pobrać. Pełna instrukcja korzystania z aplikacji jest dostępna w Bazie Wiedzy.  Dowiedz się więcej na https://wiedza.warta.pl/wp-content/uploads/2018/07/AZTEC-Instrukcja-Obs%C5%82ugi-Warta-Agent-1.pdf"
+        - text: 'Dostęp do aplikacji Warta Agent można uzyskać poprzez zalogowanie się do sklepu Google Play lub Apple App Store, gdzie można ją bezpłatnie pobrać.'
+          typing_delay: 2000
+        - text: 'Pełna instrukcja korzystania z aplikacji jest dostępna w Bazie Wiedzy.'
+          typing_delay: 2000
+        - text: 'Dowiedz się więcej...'
+          typing_delay: 2000
+        - text: 'https://wiedza.warta.pl/wp-content/uploads/2018/07/AZTEC-Instrukcja-Obs%C5%82ugi-Warta-Agent-1.pdf'
+          typing_delay: 2000
       end_of_conversation:
-  - text: "Dostęp do aplikacji Warta Agent można uzyskać poprzez zalogowanie się do sklepu Google Play lub Apple App Store, gdzie można ją bezpłatnie pobrać. Pełna instrukcja korzystania z aplikacji jest dostępna w Bazie Wiedzy. Wysyłam Ci SMS z linkiem Bazy Wiedzy."
+  - text: 'Dostęp do aplikacji Warta Agent można uzyskać poprzez zalogowanie się do sklepu Google Play lub Apple App Store, gdzie można ją bezpłatnie pobrać. Pełna instrukcja korzystania z aplikacji jest dostępna w Bazie Wiedzy. Wysyłam Ci SMS z linkiem Bazy Wiedzy.'
 
   # UTTER -----------------------------------------------------------------------------
-  utter_faqfaq/application_load_screen:
+  utter_faq/application_load_screen:
   - channel: conpeek-voice
     custom:
       blocks:
-        - text: "Jest to trochę nietypowe, ale wkrótce pojawią się odpowiednie usprawnienia przyspieszające cały proces."
+        - text: 'Jest to trochę nietypowe, ale wkrótce pojawią się odpowiednie usprawnienia przyspieszające cały proces.'
       end_of_conversation:
   - channel: conpeek-text
     custom:
       blocks:
-        - text: "Pojawiający się ekran ładowania podczas przejść pomiędzy formularzami/polami na ekranach, związany jest z automatycznym zapisywaniem poszczególnych danych w kalkulacji. Proces ten ma na celu zminimalizowanie prawdopodobieństwa utraty danych. Ciągła optymalizacja systemu jest jednym z naszych głównych założeń w projekcie, by korzystanie z aplikacji było jak najszybsze i jak najwygodniejsze. Wkrótce pojawią się odpowiednie usprawnienia przyspieszające cały proces."
+        - text: 'Pojawiający się ekran ładowania podczas przejść pomiędzy formularzami/polami na ekranach, związany jest z automatycznym zapisywaniem poszczególnych danych w kalkulacji.'
+          typing_delay: 2000
+        - text: 'Proces ten ma na celu zminimalizowanie prawdopodobieństwa utraty danych.'
+          typing_delay: 2000
+        - text: 'Ciągła optymalizacja systemu jest jednym z naszych głównych założeń w projekcie, by korzystanie z aplikacji było jak najszybsze i jak najwygodniejsze.'
+          typing_delay: 2000
+        - text: 'Wkrótce pojawią się odpowiednie usprawnienia przyspieszające cały proces.'
+          typing_delay: 2000
       end_of_conversation:
-  - text: "Jest to trochę nietypowe, ale wkrótce pojawią się odpowiednie usprawnienia przyspieszające cały proces."
+  - text: 'Jest to trochę nietypowe, ale wkrótce pojawią się odpowiednie usprawnienia przyspieszające cały proces.'
 
   # UTTER -----------------------------------------------------------------------------
-  utter_faqfaq/application_browser:
+  utter_faq/application_browser:
   - channel: conpeek-voice
     custom:
       blocks:
-        - text: "Sugerowaną przeglądarką do systemu eAgent jest Chrome."
+        - text: 'Sugerowaną przeglądarką do systemu eAgent jest Chrome.'
       end_of_conversation:
   - channel: conpeek-text
     custom:
       blocks:
-        - text: "System będzie wspierany na wskazanych poniżej przeglądarkach (wraz z ich minimalnymi wersjami): • Firefox v.30.x • Chrome v.33.x • Opera v.20.x • Safari v.5.x  Jednak sugerowaną przeglądarką do systemu eAgent jest Chrome. Korzystanie z aplikacji przez tę przeglądarkę pozwala na płynną i szybką pracę."
+        - text: 'System będzie wspierany na wskazanych poniżej przeglądarkach (wraz z ich minimalnymi wersjami): <li>Firefox v.30.x <li>Chrome v.33.x <li>Opera v.20.x <li>Safari v.5.x'
+          typing_delay: 2000
+        - text: 'Jednak sugerowaną przeglądarką do systemu eAgent jest Chrome.'
+          typing_delay: 2000
+        - text: 'Korzystanie z aplikacji przez tę przeglądarkę pozwala na płynną i szybką pracę.'
+          typing_delay: 2000
       end_of_conversation:
-  - text: "Sugerowaną przeglądarką do systemu eAgent jest Chrome."
+  - text: 'Sugerowaną przeglądarką do systemu eAgent jest Chrome.'
 
   # UTTER -----------------------------------------------------------------------------
-  utter_faqfaq/application_login:
+  utter_faq/application_login:
   - channel: conpeek-voice
     custom:
       blocks:
-        - text: "Do eAgent zalogujesz się używając tego samego loginu co do AUW (Złoty login).
-"
+        - text: 'Do eAgent zalogujesz się używając tego samego loginu co do AUW (Złoty login).'
       end_of_conversation:
   - channel: conpeek-text
     custom:
       blocks:
-        - text: "Do eAgent zalogujesz się używając tego samego loginu co do AUW (Złoty login)."
+        - text: 'Do eAgent zalogujesz się używając tego samego loginu co do AUW (Złoty login).'
+          typing_delay: 2000
       end_of_conversation:
-  - text: "Do eAgent zalogujesz się używając tego samego loginu co do AUW (Złoty login)."
+  - text: 'Do eAgent zalogujesz się używając tego samego loginu co do AUW (Złoty login).'
 
   # UTTER -----------------------------------------------------------------------------
-  utter_faqfaq/application_login_error:
+  utter_faq/application_login_error:
   - channel: conpeek-voice
     custom:
       blocks:
-        - text: "Jeśli podczas logowania eAgent wyświetli komunikat błędu należy użyć opcji menu_logout i wpisać pełny adres aplikacji w pasku adresu przeglądarki."
+        - text: 'Jeśli podczas logowania eAgent wyświetli komunikat błędu należy użyć opcji menu_logout i wpisać pełny adres aplikacji w pasku adresu przeglądarki.'
       end_of_conversation:
   - channel: conpeek-text
     custom:
       blocks:
-        - text: "Jeśli podczas logowania eAgent wyświetli komunikat błędu należy użyć opcji <menu_logout> i wpisać pełny adres aplikacji w pasku adresu przeglądarki. Sytuacja spowodowana jest próbą zalogowania do aplikacji na inny login, niż dotychczas. Po ponownym załadowaniu strony zalogowanie na inny login będzie możliwe.  Dowiedz się więcej."
+        - text: 'Jeśli podczas logowania eAgent wyświetli komunikat błędu należy użyć opcji "menu_logout" i wpisać pełny adres aplikacji w pasku adresu przeglądarki.'
+          typing_delay: 2000
+        - text: 'Sytuacja spowodowana jest próbą zalogowania do aplikacji na inny login, niż dotychczas.'
+          typing_delay: 2000
+        - text: 'Po ponownym załadowaniu strony zalogowanie na inny login będzie możliwe.'
+          typing_delay: 2000
+        - text: 'Dowiedz się więcej...'
+          typing_delay: 2000
+        - text: 'https://wiedza.warta.pl/co-w-sytuacji-gdy-przy-logowaniu-do-eagent-pojawia-sie-blad-logowanie-na-rozne-loginy'
+          typing_delay: 2000
       end_of_conversation:
-  - text: "Jeśli podczas logowania eAgent wyświetli komunikat błędu należy użyć opcji menu_logout i wpisać pełny adres aplikacji w pasku adresu przeglądarki."
+  - text: 'Jeśli podczas logowania eAgent wyświetli komunikat błędu należy użyć opcji menu_logout i wpisać pełny adres aplikacji w pasku adresu przeglądarki.'
 
   # UTTER -----------------------------------------------------------------------------
-  utter_faqfaq/application_multi_login:
+  utter_faq/application_multi_login:
   - channel: conpeek-voice
     custom:
       blocks:
-        - text: "Możesz jednoczesnego zalogowania się tym samym loginem na kilku urządzeniach, przeglądarkach lub kartach."
+        - text: 'Możesz jednoczesnego zalogowania się tym samym loginem na kilku urządzeniach, przeglądarkach lub kartach.'
       end_of_conversation:
   - channel: conpeek-text
     custom:
       blocks:
-        - text: "Istnieje możliwość jednoczesnego zalogowania się tym samym loginem na kilku urządzeniach, przeglądarkach lub kartach."
+        - text: 'Istnieje możliwość jednoczesnego zalogowania się tym samym loginem na kilku urządzeniach, przeglądarkach lub kartach.'
+          typing_delay: 2000
       end_of_conversation:
-  - text: "Możesz jednoczesnego zalogowania się tym samym loginem na kilku urządzeniach, przeglądarkach lub kartach."
+  - text: 'Możesz jednoczesnego zalogowania się tym samym loginem na kilku urządzeniach, przeglądarkach lub kartach.'
 
   # UTTER -----------------------------------------------------------------------------
-  utter_faqfaq/application_slow:
+  utter_faq/application_slow:
   - channel: conpeek-voice
     custom:
       blocks:
-        - text: "W przypadku spowolnienia programu eAgent, proszę spróbować przejść do innej przeglądarki internetowej. Zalecaną przeglądarką jest Google Chrome. "
+        - text: 'W przypadku spowolnienia programu eAgent, proszę spróbować przejść do innej przeglądarki internetowej. Zalecaną przeglądarką jest Google Chrome.'
       end_of_conversation:
   - channel: conpeek-text
     custom:
       blocks:
-        - text: "W przypadku spowolnienia programu eAgent, proszę spróbować przejść do innej przeglądarki internetowej. Zalecaną przeglądarką jest Google Chrome.  W Google Chrome warto wyczyścić tymczasowe pliki internetowe oraz pliki cookies. Opcję tą można znaleźć w prawym górnym rogu przeglądarki w zakładce <dostosowywanie i  kontrolowanie Google Chrome> (ikona- trzy pionowe kropki). Następnie należy wybrać zakładkę <Historia> i w oknie <Historia> wybrać „Wyczyść dane przeglądania”."
+        - text: 'W przypadku spowolnienia programu eAgent, proszę spróbować przejść do innej przeglądarki internetowej.'
+          typing_delay: 2000
+        - text: 'Zalecaną przeglądarką jest Google Chrome.'
+          typing_delay: 2000
+        - text: 'W Google Chrome warto wyczyścić tymczasowe pliki internetowe oraz pliki cookies.'
+          typing_delay: 2000
+        - text: 'Opcję tą można znaleźć w prawym górnym rogu przeglądarki w zakładce <dostosowywanie i  kontrolowanie Google Chrome> (ikona- trzy pionowe kropki).'
+          typing_delay: 2000
+        - text: 'Następnie należy wybrać zakładkę <Historia> i w oknie <Historia> wybrać "Wyczyść dane przeglądania".'
+          typing_delay: 2000
       end_of_conversation:
-  - text: "W przypadku spowolnienia programu eAgent, proszę spróbować przejść do innej przeglądarki internetowej. Zalecaną przeglądarką jest Google Chrome. "
+  - text: 'W przypadku spowolnienia programu eAgent, proszę spróbować przejść do innej przeglądarki internetowej. Zalecaną przeglądarką jest Google Chrome.'
 

@@ -19,6 +19,8 @@ pipeline:
     threshold: 0.7
   - name: ResponseSelector
     epochs: 100
+    retrieval_intent: faq
+    constrain_similarities: True
 
 policies:
   - name: AugmentedMemoizationPolicy
@@ -29,3 +31,4 @@ policies:
     max_history: 5
     epochs: 100
   - name: RulePolicy
+    constrain_similarities: True

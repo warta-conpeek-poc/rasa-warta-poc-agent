@@ -145,10 +145,44 @@ nlu:
     - aplikacja działa wolno
     - aplikacja działa powoli
 
+- intent: agent_question_general
+  examples: |
+    - czy pojazd który był w leasingu jeśli faktura wykupu będzie to czy OC się rozwiąże, czy się wznowi
+    - jeżeli była rejestracja, przepisanie polisy z zbywcy na nabywcy, jeżeli te dane są zmienione w eAgent, czy można wydruk uzyskać polisę lub potwierdzenie OC
+    - dzwonię w takiej sprawie, wysyłałam poprzez zgłoszenia takie zadanie że klient wykupił pojazd z leasingu i następnie go sprzedał
+    - dzwonię z takim problemem, ponieważ w poniedziałek wystawiłam kontynuację polisy na gotówkę, poniewż klientka do mnie dzwoniła i poprosiła o wystawienie, ale nie miałam możliwości wystawienia na przelew
+    - czy ja mogę w imieniu klienta wysłać taki wniosek o zaświadczenie o przebiegu ubezpieczenia
+    - w zeszły czwartek założyłem zadanie o numerze OZ
+    - pierwszy raz zdarzyło mi się, że klient chce ubezpieczyć telefon, weszłam w aplikację, ale nie mam tego modelu telefonu, muszę wysłać zdjęcia jak się za to technicznie zrobić
+    - jeżeli przyjmuje pieniądze na kwitariusz to czy ja mam podłączyć pod polisę
+    - chciałabym złożyć prośbę klienta w związku ze zmianą agenta do polisy, gdzie to wysłać
+    - ma taką prośbę, zgubiła gdzieś umowę, certyfikat, jak to można przesłać
+    - mam problem z załączeniem skanu jednego dokumentu do portalu
+    - dostałam dostępy i muszę aktywować kalkulator
+    - wysłałem polisę zdalną i zrobiłem literówkę w @ czy mogę to jakoś zmienić
+    - korzystam z portalu warta dla agentów, nie widzę tutaj możliwości samodzielnej wyceny pojazdu w info expert
+    - nie widzę możliwości samodzielnej wyceny pojazdu w programie
 
+- intent: agent_question_payments
+  examples: |
+    - wie pani co, klient dostaje wezwanie o zadłużenie do polisy, chodzi o polisę, czy jest opłacona
+    - Mam taką sprawę, dzownie w imieniu agenta, którego klient dostaje wezwanie do zapłaty.
+    - Chciałbym uregulować zaległości
+    - jestem agentem, czy na polisie wszystkie raty są opłacone
+    - sprawdzić poliskę, mam polisę w ratach i nie wiem czy jest opłacona
+    - chciałabym dopytać o płatności na polisie klienta
+    - chciałem sprawdzić jedną polisę na dom mojej klientki, Warta informuje o niezgdodności płatności
+    - mój numer agenta to (…) chciałabym się podpytać o jedną polisę, płatność na niej
+    - mogła by Pani sprawdzić płatność na polisie bo mi pokazuje eagent, że nie spłacona, a klient półtora tygodnia temu robił przelew
 
-
-
+- intent: agent_question_validity
+  examples: |
+    - chciałbym zapytać czy polisa jest aktywna
+    - informację czy polisa została rozwiazana
+    - chciałam sprawdzić status polisy o numerze (…)
+    - anulowałam polisę i zrobiłam w to miejsce drugą, chciałabym sprawdzić czy jest anulowana
+    - chodzi mi o takie sprawdzenie, tam klientka składala prośbę o zamknięcie polisy AC z dobrowolnego ryzyka. Wysłałam to 12 lutego i nie mam informacji zwrotnej
+    - chciałbym sprawdzić okres ubepzieczenia polisy, klient nabył auto, ale zrobił polise gdzie indziej, ale przychodzi mu SMS o niedopłacie
 
 
 

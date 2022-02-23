@@ -27,15 +27,13 @@ rules:
   - intent: faq
   - action: utter_faq
 
-#- rule: Activate insurance_number_form for customer insurance questions
-#  steps:
-#  - or:
-#    - intent: customer_question_payments
-#    - intent: customer_question_validity
-#  - action: action_set_customer_question_path
-#  - action: insurance_number_form
-#  - active_loop: insurance_number_form
-#
+- rule: Activate insurance_number_form for agent insurance questions
+  steps:
+  - or:
+    - intent: agent_question_payments
+    - intent: agent_question_validity
+  - action: action_set_agent_question_path
+  - action: insurance_number_form
+  - active_loop: insurance_number_form
 
-#  wait_for_user_input: false
 

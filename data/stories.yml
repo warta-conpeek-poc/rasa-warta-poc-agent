@@ -2,11 +2,22 @@ version: "2.0"
 
 stories:
 
-# Customer question flow
+# Agent question flow
+
+- story: annex general
+  steps:
+    - intent: annex
+    - action: utter_annex_clarify
+
+- story: application general
+  steps:
+    - intent: application
+    - action: utter_application_clarify
+
 - story: question general
   steps:
-  - intent: customer_question_general
-  - action: utter_customer_question_transfer
+    - intent: agent_question_general
+    - action: utter_agent_care_transfer
 
 - story: insurance question without insurance number
   steps:
@@ -15,7 +26,7 @@ stories:
   - slot_was_set:
     - insurance_number_verified: false
   - active_loop: null
-  - action: utter_customer_question_transfer
+  - action: utter_agent_care_transfer
 
 - story: insurance question with insurance number
   steps:
@@ -24,26 +35,26 @@ stories:
   - slot_was_set:
     - insurance_number_verified: true
   - active_loop: null
-  - action: customer_authentication_form
-  - active_loop: customer_authentication_form
-  - slot_was_set:
-    - subject_type: any
+  - action: agent_authentication_form
+  - active_loop: agent_authentication_form
   - active_loop: null
-  - action: action_perform_customer_authentication
-  - checkpoint: customer_question_customer_authentication
-
-- story: status authentication failed
-  steps:
-  - checkpoint: customer_question_customer_authentication
+  - action: action_perform_agent_authentication
   - slot_was_set:
-    - customer_authenticated: false
-  - action: utter_customer_question_transfer
+    - agent_authenticated: false
+  - action: utter_agent_care_transfer
 
-- story: status authentication succeed - consultant direct
+- story: insurance question with insurance number
   steps:
-  - checkpoint: customer_question_customer_authentication
+  - action: insurance_number_form
+  - active_loop: insurance_number_form
   - slot_was_set:
-    - customer_authenticated: true
-  - action: action_set_customer_question_path
-  - action: action_select_utter_customer_question_bot_info
+    - insurance_number_verified: true
+  - active_loop: null
+  - action: agent_authentication_form
+  - active_loop: agent_authentication_form
+  - active_loop: null
+  - action: action_perform_agent_authentication
+  - slot_was_set:
+    - agent_authenticated: true
+  - action: action_select_utter_agent_question_bot_info
 
