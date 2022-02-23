@@ -1,0 +1,29 @@
+Nr szkody;Data zgłoszenia;Nr polisy;Przedmiot szkody;Rodzaj przedmiotu;Imię i nazwisko poszkodowanego;Pesel poszkodowanego;Czy zostały zlecone oględziny;data oględzin;Czy była wypłata;Kwota wypłaty;data wypłaty;Czy brakuje dokumentów;Jakich dokumentów brakuje;Nr rejestracyjny;Wpływ dokumentów ostatnich (data);Email opiekuna
+W202112160034-01;2021-12-16;920001672456;Renault Clio;Pojazd;Jan Kowalski;57052251670;Tak;04.01.2022;NIE;0;0;Tak;Notatka z policji;SO1067M;18.01.2022;Maciej.Kulczyk@warta.pl
+W202201230007-01;2022-01-23;920001234567;41-300 Dąbrowa Górnicza, ul. Królowej Jadwigi 23/7;Nieruchomość;Piotr Rusinek;58041770875;Tak;28.01.2022;NIE;0;0;Nie;;;03.02.2022;Maciej.Kulczyk@warta.pl
+W202112041004-01;2021-12-20;912700451338;VOLKSWAGEN Crafter 35;Pojazd;SITEK GNICH HUKIEWICZ;71051813358;Tak;29.12.2022;TAK;1678;10.01.2022;;; (WM78466);;Maciej.Kulczyk@warta.pl
+W202112091402-01;2021-12-20;920010747285;NISSAN Qashqai II;Pojazd;Piotr Nowak;61051281837;Tak;03.01.2022;TAK;10789;01.02.2022;;; (KWA50015);;Maciej.Kulczyk@warta.pl
+W202112131005-01;2021-12-21;908100558147;FIAT 600;Pojazd;Justyna Banach;72012554666;Nie;;Tak;880;;Nie;;(DW625FE);;Maciej.Kulczyk@warta.pl
+W202112231233-01;2021-12-22;920017044414;BMW 520 ;Pojazd;ADELA WIEWIÓROWSKA;66020904869;Nie;;Nie;;;;"Oświadczenie sprawcy,
+Upoważnienie dla warsztatu";(TKI0502G);25.01.2022;Maciej.Kulczyk@warta.pl
+W202112291019-01;2021-12-22;920014488531;SEAT Leon;Pojazd;Joachim Szewczyk;75110354552;Nie;;Tak;2500;;;;(KNTPP82);;Maciej.Kulczyk@warta.pl
+H202112041008-01;2021-12-20;920016276341;CITROEN C4;Pojazd;SADOK ZUBRZYCKI;78031671678;Tak;21.12.2021;NIE;;;Tak;Faktura naprawy;(LU38512);28.12.2021;Maciej.Kulczyk@warta.pl
+W202112141010-01;2021-12-21;908210782615;Obrażenia osobowe;Szkoda osobowa;Krzysztof Kajak;87091103351;Nie;;Nie;;;Tak;Dokumentacja medyczna;;brak;Maciej.Kulczyk@warta.pl
+W202112221019-01;2021-12-22;920010937131;"89-115 Mrocza; Józefa Piłsudzkiego 18";Nieruchomość;Longin Kończyński;86111263774;Nie;;Tak;890;;;;;;Maciej.Kulczyk@warta.pl
+W202112221024-02;2021-12-22;908576381616;"43-344 Bielsko - Biała
+ul. DESZCZOWA 16";Nieruchomość;Teofil Biebrzański;97061503836;Tak;29.12.2022;TAK;472;15.01.2022;;;;;Maciej.Kulczyk@warta.pl
+W202112231018-01;2021-12-22;908756617423;"16-400 SUWAŁKI
+ul. CIECHANOWSKA 8U m. 47";Nieruchomość;LOLEK MATACZYŃSKI;46090175130;Tak;29.12.2022;TAK;671;11.01.2022;;;;;Maciej.Kulczyk@warta.pl
+W202112231121-01;2021-12-22;920019079290;Obrażenia osobowe;Szkoda osobowa;Agata Chrust;62091517049;Nie;;Tak;250;;;;;;Maciej.Kulczyk@warta.pl
+W202112231503-02;2021-12-22;920017085865;FORD Ranger 4x4;Pojazd;NATALKA MIŁKOWSKA;32032148603;Tak;29.12.2022;TAK;25983;13.01.2022;;;(WE024EV);;Maciej.Kulczyk@warta.pl
+W202112271030-01;2021-12-22;920016816047;"38-500 Sanok
+Kościelna 8";Nieruchomość;Kornelia Głowowska;94011602621;Nie;;Nie;;;Tak;Faktura naprawy;;brak;Maciej.Kulczyk@warta.pl
+W202112291015-01;2021-12-22;920014768853;Obrażenia osobowe;Szkoda osobowa;TOLIMIR ALEKSANDROWSKI;38091583232;Nie;;Nie;;;Tak;Notatka z policji;;27.12.2021;Maciej.Kulczyk@warta.pl
+W202201071012-01;2022-01-10;920011024829;"80-534 GDAŃSK
+ul. STAROWIEJSKA 91 m. 35";Nieruchomość;WIESŁAW ZDZIENNICKI;69092777254;Tak;13.01.2022;TAK;4507;30.01.2022;;;;;Maciej.Kulczyk@warta.pl
+W202201271024-02;27.01.2022;920016024476;TOYOTA Mirai;Pojazd;Maciej Dybała;24112444316;Tak;31.01.2022;NIE;;;Tak;Zgoda Leasingu; (WN6374L);05.01.2022;Maciej.Kulczyk@warta.pl
+W202202021000-01;02.02.2022;908767342890;"10-691 OLSZTYN
+ul. KANTA 18 m. 21";Nieruchomość;Adam Jackowski;28050265358;Tak;05.02.2022;NIE;;;Tak;Akt własności;;28.01.2022;Maciej.Kulczyk@warta.pl
+W202202021010-01;2022-02-20;911700253901;Ford Fiesta;Pojazd;Hieronim Gruziński;35012057874;Nie;;NIE;;;Tak;"Notatka z policji,
+Dowód rejestracyjny,
+Wycena szkody";WE4509T;12.01.2022;Maciej.Kulczyk@warta.pl

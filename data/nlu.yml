@@ -1,0 +1,158 @@
+version: "2.0"
+
+nlu:
+
+- intent: connected
+  examples: |
+    - __PEER_CONNECTED__
+    - __peer_connected__
+
+- intent: disconnected
+  examples: |
+    - __PEER_DISCONNECTED__
+    - __peer_disconnected__
+
+- intent: asr_low_confidence
+  examples: |
+    - __LOW_CONFIDENCE__
+    - __low_confidence__
+
+- intent: out_of_scope
+  examples: |
+    - jaki dziś mamy dzień?
+    - jak masz na imię?
+    - ile masz lat?
+    - jaka jest pogoda?
+
+- intent: affirm
+  examples: |
+    - tak
+    - potwierdzam
+    - oczywiście
+    - jasne
+    - tak jest
+    - poproszę
+    - zgoda
+    - zgadzam się
+
+- intent: deny
+  examples: |
+    - nie
+    - nigdy
+    - nie ma mowy
+    - nie zgadzam się
+    - w życiu
+    - w żadnym wypadku
+
+- intent: inform
+  examples: |
+    - 74081109356
+    - 59052307276
+    - 912001587844
+    - 920018515507
+
+- intent: annex
+  examples: |
+    - aneks
+    - w sprawie aneksu
+    - chodzi o aneks
+
+- intent: application
+  examples: |
+    - aplikacja
+    - w sprawie aaplikacji
+    - chodzi o aplikację
+
+- intent: faq/annex_comment
+  examples: |
+    - gdzie można wpisać komentarz do aneksu
+    - miejsce na wpisanie komentarza do aneksu
+    - chciałbym wpisać komentarz do aneksu
+
+- intent: faq/annex_resend
+  examples: |
+    - w jaki sposób ponownie wysłać aneks
+    - chciałbym wysłać ponownie aneks
+    - jak ponowić wysyłkę aneksu
+
+- intent: faq/annex_types
+  examples: |
+    - jakie są dostępne aneksy
+    - jakie są rodzaje aneksów
+
+- intent: faq/annex_recalculation
+  examples: |
+    - aneks rekalkulacyjny
+    - w sprawie aneksu rekalkulacyjnego
+
+- intent: faq/annex_creation
+  examples: |
+    - jak wystawić aneks
+    - jak zrobić aneks
+
+- intent: faq/annex_extra_smart
+  examples: |
+    - jak wystawić aneks ekstrabiznes
+    - jak wystawić aneks smartbiznes
+
+- intent: faq/annex_attachment
+  examples: |
+    - dodawanie załącznika do aneksu
+    - jak dodać załącznik do aneksu
+
+- intent: faq/annex_foreign_approval
+  examples: |
+    - jak zatwierdzić aneks wystawiony do polisy obcej
+    - aneks do polisy obcej zatwierdzenie
+
+- intent: faq/application_aztec
+  examples: |
+    - jak zeskanować kod aztec
+    - zeskanowanie kodu aztec
+
+- intent: faq/application_load_screen
+  examples: |
+    - ekran ładowania przy przejściu między formularzami
+    - ekran ładowania przy przejściu między polami
+
+- intent: faq/application_browser
+  examples: |
+    - jakie przeglądarki obsługują system
+    - jakie przeglądarki są wspierane
+
+- intent: faq/application_login
+  examples: |
+    - login do systemu e agent
+    - jak się zalogować do e agent
+
+- intent: faq/application_login_error
+  examples: |
+    - błąd podczas logowania
+    - nie mogę się zalogować
+
+- intent: faq/application_multi_login
+  examples: |
+    - jednoczesne zalogowanie na kilku urządzeniach
+    - jednoczesne zalogowanie na kilku przeglądarkach
+    - jednoczesne zalogowanie na kilku kartach
+    - czy można się jednocześnie zalogować na kilku urządzeniach
+    - czy można się jednocześnie zalogować na kilku przeglądarkach
+    - czy można się jednocześnie zalogować na kilku kartach
+
+- intent: faq/application_slow
+  examples: |
+    - wolne działanie aplikacji
+    - aplikacja działa wolno
+    - aplikacja działa powoli
+
+
+
+
+
+
+
+
+
+
+
+
