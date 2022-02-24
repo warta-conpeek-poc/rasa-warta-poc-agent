@@ -101,7 +101,6 @@ slots:
     influence_conversation: false
 
 actions:
-  - action_restarted
   - action_session_start
   - action_low_confidence
   - action_perform_agent_authentication

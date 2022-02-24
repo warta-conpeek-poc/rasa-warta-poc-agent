@@ -45,25 +45,6 @@ class ActionSessionStart(Action):
         events.append(SlotSet("validate_counter", 0))
         return events
 
-
-class ActionAllSlotsReset(Action):
-
-    def name(self) -> Text:
-        return "action_all_slots_reset"
-
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        dispatcher.utter_message(text="Wszystkie dane zostały zresetowane.")
-        return [AllSlotsReset()]
-
-class ActionRestarted(Action):
-
-    def name(self) -> Text:
-        return "action_restarted"
-
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        dispatcher.utter_message(text="Konwersacja została zrestartowana.")
-        return [Restarted()]
-
 class ActionLowConfidence(Action):
 
     def name(self) -> Text:
@@ -77,18 +58,16 @@ class ActionLowConfidence(Action):
             utter_list.append("")
         else:
             utter_list.append("Czy możesz powtórzyć?")
-        text_message = random.choice(utter_list)
-        custom_message = {
-            "blocks": [
-                {
-                    "text": text_message,
-                }
-            ]
+        text = random.choice(utter_list)
+        bot_event = next(e for e in reversed(tracker.events) if e["event"] == "bot")
+        custom = {
+            "blocks": bot_event["data"]["custom"]["blocks"]
         }
-        if tracker.get_latest_input_channel() == "conpeek-voice":
-            dispatcher.utter_message(json_message=custom_message)
+        custom["blocks"][0]["text"] = text
+        if tracker.get_latest_input_channel() in ("conpeek-voice", "conpeek-text"):
+            dispatcher.utter_message(json_message=custom)
         else:
-            dispatcher.utter_message(text=text_message)
+            dispatcher.utter_message(text=text)
         return [UserUtteranceReverted()]
 
 class ActionOutOfScope(Action):
@@ -99,9 +78,9 @@ class ActionOutOfScope(Action):
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         bot_event = next(e for e in reversed(tracker.events) if e["event"] == "bot")
         if bot_event.get("data").get("custom").get("out_of_scope"):
+            text = bot_event["data"]["custom"]["blocks"][0]["text"]
             custom = bot_event.get("data").get("custom")
         else:
-            logging.critical(bot_event["data"]["custom"]["blocks"])
             text = "Niestety, nie wiem co mam powiedzieć. Wróćmy proszę do tematu rozmowy. "
             text += bot_event["data"]["custom"]["blocks"][0]["text"]
             custom = {
@@ -109,9 +88,11 @@ class ActionOutOfScope(Action):
                 "blocks": bot_event["data"]["custom"]["blocks"]
             }
             custom["blocks"][0]["text"] = text
-        dispatcher.utter_message(json_message=custom)
+        if tracker.get_latest_input_channel() in ("conpeek-voice", "conpeek-text"):
+            dispatcher.utter_message(json_message=custom)
+        else:
+            dispatcher.utter_message(text=text)
         return [UserUtteranceReverted()]
-
 
 class ValidateInsuranceNumberForm(FormValidationAction):
     def name(self) -> Text:
