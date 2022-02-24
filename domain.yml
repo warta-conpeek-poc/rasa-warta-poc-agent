@@ -19,6 +19,10 @@ intents:
   - agent_question_payments
   - agent_question_validity
 
+entities:
+  - given_insurance_number
+  - given_agent_number
+
 slots:
   agent_authenticated:
     type: bool
@@ -98,8 +102,8 @@ slots:
 
 actions:
   - action_restarted
-  - action_low_confidence
   - action_session_start
+  - action_low_confidence
   - action_perform_agent_authentication
   - action_out_of_scope
   - action_select_utter_agent_question_bot_info
@@ -110,7 +114,7 @@ actions:
 forms:
   insurance_number_form:
     required_slots:
-      insurance_number_verified:
+      given_insurance_number:
         - type: from_text
 
   agent_authentication_form:
@@ -140,11 +144,13 @@ responses:
       custom:
         blocks:
           - text: 'W czym mogę pomóc?'
+            sentence_time_max: 30000
+            sentence_end_silence_time: 3000
     - channel: conpeek-text
       custom:
         blocks:
           - text: 'W czym mogę pomóc?'
-            typing_delay: 1000
+            typing_delay: 2000
     - text: 'W czym mogę pomóc?'
 
   # UTTER -----------------------------------------------------------------------------
@@ -258,19 +264,20 @@ responses:
   - channel: conpeek-voice
     custom:
       blocks:
-      - text: 'Twoja polisa jest już nieaktywna. Jej ważność upłynęła w dniu {insurance_end_date}.'
-        ssml: 'Twoja polisa jest już nieaktywna. Jej ważność upłynęła w dniu <say-as interpret-as="date" format="yyyy-mm-dd">{insurance_end_date}</say-as>.'
+      - text: 'Polisa jest nieaktywna.'
+        ssml: 'Polisa jest nieaktywna.'
+      end_of_conversation:
   - channel: conpeek-text
     custom:
       blocks:
-      - text: 'Twoja polisa jest już nieaktywna. Jej ważność upłynęła w dniu {insurance_end_date}.'
+      - text: 'Polisa jest nieaktywna.'
       end_of_conversation:
-  - text: 'Twoja polisa jest już nieaktywna. Jej ważność upłynęła w dniu {insurance_end_date}.'
+  - text: 'Polisa jest nieaktywna.'
 
 
   # ---------------------- FORM INSURANCE NUMBER ------------------------------------------
   # UTTER -----------------------------------------------------------------------------
-  utter_ask_insurance_number_form_insurance_number_verified:
+  utter_ask_insurance_number_form_given_insurance_number:
     - channel: conpeek-voice
       custom:
         blocks:

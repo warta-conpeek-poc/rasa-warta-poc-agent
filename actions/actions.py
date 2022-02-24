@@ -38,21 +38,13 @@ class ActionSessionStart(Action):
         return "action_session_start"
 
     async def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[EventType]:
-
         logging.critical("Session started !!!")
         events = [SessionStarted(), ActionExecuted("action_listen")]
         metadata = tracker.get_slot("session_started_metadata")
         logging.critical(metadata)
-        if metadata and "caller_contact_address" in metadata:
-            caller_contact_address = metadata["caller_contact_address"]
-            match = re.match("^\d+$", caller_contact_address)
-            if match:
-                events.append(SlotSet("customer_phone_number", caller_contact_address))
-                # events.append(SlotSet("customer_phone_number", "501003003"))
-        if metadata and "callee_contact_address" in metadata:
-            events.append(SlotSet("service_phone_number", metadata["callee_contact_address"]))
         events.append(SlotSet("validate_counter", 0))
         return events
+
 
 class ActionAllSlotsReset(Action):
 
@@ -107,19 +99,16 @@ class ActionOutOfScope(Action):
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         bot_event = next(e for e in reversed(tracker.events) if e["event"] == "bot")
         if bot_event.get("data").get("custom").get("out_of_scope"):
-            text = bot_event["data"]["custom"]["blocks"][0]["text"]
             custom = bot_event.get("data").get("custom")
         else:
+            logging.critical(bot_event["data"]["custom"]["blocks"])
             text = "Niestety, nie wiem co mam powiedzieć. Wróćmy proszę do tematu rozmowy. "
             text += bot_event["data"]["custom"]["blocks"][0]["text"]
             custom = {
                 "out_of_scope": True,
-                "blocks": [
-                    {
-                        "text": text,
-                    }
-                ]
+                "blocks": bot_event["data"]["custom"]["blocks"]
             }
+            custom["blocks"][0]["text"] = text
         dispatcher.utter_message(json_message=custom)
         return [UserUtteranceReverted()]
 
@@ -128,7 +117,10 @@ class ValidateInsuranceNumberForm(FormValidationAction):
     def name(self) -> Text:
         return "validate_insurance_number_form"
 
-    def validate_insurance_number_verified(self, slot_value: Any, dispatcher: CollectingDispatcher, tracker: Tracker, domain: DomainDict,) -> Dict[Text, Any]:
+    # async def extract_given_insurance_number(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict) -> Dict[Text, Any]:
+    #     logging.critical(f"extract_given_insurance_number")
+
+    def validate_given_insurance_number(self, slot_value: Any, dispatcher: CollectingDispatcher, tracker: Tracker, domain: DomainDict,) -> Dict[Text, Any]:
         if not slot_value:
             slot_value = "empty"
         validate_limit = 2
@@ -203,8 +195,8 @@ class ValidateInsuranceNumberForm(FormValidationAction):
                 }
             else:
                 slots = {
-                    "given_insurance_number": slot_value,
-                    "insurance_number_verified": None,
+                    "given_insurance_number": None,
+                    "insurance_number_verified": False,
                     "validate_counter": validate_counter
                 }
         return slots
@@ -232,7 +224,7 @@ class ValidateAgentAuthenticationForm(FormValidationAction):
         logging.critical(f"Got given agent number: {given_agent_number} from slot_value: {slot_value} with matching result: {match}")
         if match :
             slots = {
-                "given_agent_number": given_agent_number,
+                "given_agent_number": given_agent_number.upper(),
                 "validate_counter": 0
             }
         else:
@@ -322,7 +314,7 @@ class ActionSelectUtterAgentQuestionBotInfo(Action):
                 events.append(FollowupAction("utter_agent_question_payment_waiting"))
         elif agent_question_path == "bot_info_validity":
             insurance_active = tracker.get_slot("insurance_active")
-            if insurance_active:
+            if insurance_active == "TAK":
                 events.append(FollowupAction("utter_agent_question_insurance_active"))
             else:
                 events.append(FollowupAction("utter_agent_question_insurance_inactive"))

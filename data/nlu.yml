@@ -172,14 +172,21 @@ nlu:
     - sprawdzić poliskę, mam polisę w ratach i nie wiem czy jest opłacona
     - chciałabym dopytać o płatności na polisie klienta
     - chciałem sprawdzić jedną polisę na dom mojej klientki, Warta informuje o niezgdodności płatności
-    - mój numer agenta to (…) chciałabym się podpytać o jedną polisę, płatność na niej
     - mogła by Pani sprawdzić płatność na polisie bo mi pokazuje eagent, że nie spłacona, a klient półtora tygodnia temu robił przelew
+    - chodzi o polisę numer [91 20 015 878 44](given_insurance_number) czy jest opłacona
+    - chciałbym sprawdzić płatności na polisie [91 2001 587 844](given_insurance_number)
+    - mój numer agenta to [a 00 02 19 430 06](given_agent_number), chciałbym się podpytać o jedną polisę, płatność na niej
+    - mój numer agenta to [a 000 21 94 30 06](given_agent_number), chciałbym sprawdzić płatności dla polisy
+    - z tej strony pośrednik o numerze [a 0 0 0 2 1 9 4 3 0 0 6](given_agent_number), chciałabym dopytać o płatności na polisie klienta
 
 - intent: agent_question_validity
   examples: |
     - chciałbym zapytać czy polisa jest aktywna
-    - informację czy polisa została rozwiazana
-    - chciałam sprawdzić status polisy o numerze (…)
+    - chciałbym zapytać czy polisa [9 1200 158 78 44](given_insurance_number) jest aktywna
+    - mój numer agenta to [a 0 0 02 19 43 006](given_agent_number) chciałbym sprawdzić czy polisa jest aktywna.
+    - potrzebuję informację czy polisa została rozwiązana
+    - potrzebuję informację czy polisa o numerze [91 200 15 8 78 44](given_insurance_number) została rozwiązana
+    - chciałam sprawdzić status polisy o numerze [912 001 58 78 44](given_insurance_number)
     - anulowałam polisę i zrobiłam w to miejsce drugą, chciałabym sprawdzić czy jest anulowana
     - chodzi mi o takie sprawdzenie, tam klientka składala prośbę o zamknięcie polisy AC z dobrowolnego ryzyka. Wysłałam to 12 lutego i nie mam informacji zwrotnej
     - chciałbym sprawdzić okres ubepzieczenia polisy, klient nabył auto, ale zrobił polise gdzie indziej, ale przychodzi mu SMS o niedopłacie

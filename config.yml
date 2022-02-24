@@ -16,7 +16,7 @@ pipeline:
     epochs: 100
   - name: EntitySynonymMapper
   - name: FallbackClassifier
-    threshold: 0.7
+    threshold: 0.6
   - name: ResponseSelector
     epochs: 100
     retrieval_intent: faq
