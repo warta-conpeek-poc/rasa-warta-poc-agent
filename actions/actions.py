@@ -9,7 +9,6 @@ from rasa_sdk.events import SessionStarted
 from rasa_sdk.events import ActionExecuted
 from rasa_sdk.events import Restarted
 from rasa_sdk.events import EventType
-from rasa_sdk.events import FollowupAction
 from rasa_sdk.events import UserUtteranceReverted
 from rasa_sdk.executor import CollectingDispatcher
 #
@@ -290,17 +289,17 @@ class ActionSelectUtterAgentQuestionBotInfo(Action):
             insurance_payment_1_done = tracker.get_slot("insurance_payment_1_done")
             insurance_payment_2_done = tracker.get_slot("insurance_payment_2_done")
             if insurance_payment_1_done and insurance_payment_2_done:
-                events.append(FollowupAction("utter_agent_question_payment_done"))
+                dispatcher.utter_template("utter_agent_question_payment_done", tracker)
             else:
-                events.append(FollowupAction("utter_agent_question_payment_waiting"))
+                dispatcher.utter_template("utter_agent_question_payment_waiting", tracker)
         elif agent_question_path == "bot_info_validity":
             insurance_active = tracker.get_slot("insurance_active")
             if insurance_active == "TAK":
-                events.append(FollowupAction("utter_agent_question_insurance_active"))
+                dispatcher.utter_template("utter_agent_question_insurance_active", tracker)
             else:
-                events.append(FollowupAction("utter_agent_question_insurance_inactive"))
+                dispatcher.utter_template("utter_agent_question_insurance_inactive", tracker)
         else:
-            events.append(FollowupAction("utter_error"))
+            dispatcher.utter_template("utter_error", tracker)
         return events
 
 class ActionPerformAgentAuthentication(Action):
