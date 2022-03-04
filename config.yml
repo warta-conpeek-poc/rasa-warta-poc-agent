@@ -16,7 +16,7 @@ pipeline:
     epochs: 100
   - name: EntitySynonymMapper
   - name: FallbackClassifier
-    threshold: 0.6
+    threshold: 0.7
   - name: ResponseSelector
     epochs: 100
     retrieval_intent: faq
@@ -25,10 +25,13 @@ pipeline:
 policies:
   - name: AugmentedMemoizationPolicy
     constrain_similarities: True
-    max_history: 5
+    max_history: 6
   - name: TEDPolicy
     constrain_similarities: True
-    max_history: 5
+    max_history: 6
     epochs: 100
   - name: RulePolicy
     constrain_similarities: True
+    core_fallback_threshold: 0.7
+    core_fallback_action_name: "action_default_fallback"
+    enable_fallback_prediction: True

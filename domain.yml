@@ -102,7 +102,8 @@ slots:
 
 actions:
   - action_session_start
-  - action_low_confidence
+  - action_asr_low_confidence
+  - action_nlu_low_confidence
   - action_perform_agent_authentication
   - action_out_of_scope
   - action_select_utter_agent_question_bot_info
@@ -136,6 +137,11 @@ responses:
           - text: 'Coś poszło nie tak. To jest komunikat diagnostyczny.'
             typing_delay: 2000
     - text: 'Coś poszło nie tak. To jest komunikat diagnostyczny.'
+
+  # UTTER -----------------------------------------------------------------------------
+  utter_default:
+    - text: 'Przepraszam, ale nie zrozumiałem. Czy możesz powtórzyć?'
+
 
   # UTTER -----------------------------------------------------------------------------
   utter_greet:

@@ -2,7 +2,7 @@ version: "2.0"
 
 rules:
 
-- rule: Say goodbye anytime the user says goodbye
+- rule: Say greet on start
   steps:
   - intent: connected
   - action: utter_greet
@@ -15,12 +15,22 @@ rules:
 - rule: ASR low confidence
   steps:
   - intent: asr_low_confidence
-  - action: action_low_confidence
+  - action: action_asr_low_confidence
+
+- rule: NLU low confidence
+  steps:
+  - intent: nlu_fallback
+  - action: action_nlu_low_confidence
 
 - rule: out-of-scope
   steps:
   - intent: out_of_scope
   - action: action_out_of_scope
+
+- rule:  inform out of form
+  steps:
+  - intent: inform
+  - action: action_default_fallback
 
 - rule: respond to FAQs
   steps:

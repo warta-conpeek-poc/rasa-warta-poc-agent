@@ -44,20 +44,41 @@ class ActionSessionStart(Action):
         events.append(SlotSet("validate_counter", 0))
         return events
 
-class ActionLowConfidence(Action):
+class ActionAsrLowConfidence(Action):
 
     def name(self) -> Text:
-        return "action_low_confidence"
+        return "action_asr_low_confidence"
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        utter_list = []
         metadata = tracker.latest_message["metadata"]
         logging.info(metadata)
         if "stop_playback_date" in metadata and not metadata["stop_playback_date"]:
-            utter_list.append("")
+            text = ""
         else:
-            utter_list.append("Czy możesz powtórzyć?")
-        text = random.choice(utter_list)
+            text = "Czy możesz powtórzyć?"
+        bot_event = next(e for e in reversed(tracker.events) if e["event"] == "bot")
+        custom = {
+            "blocks": bot_event["data"]["custom"]["blocks"]
+        }
+        custom["blocks"][0]["text"] = text
+        if tracker.get_latest_input_channel() in ("conpeek-voice", "conpeek-text"):
+            dispatcher.utter_message(json_message=custom)
+        else:
+            dispatcher.utter_message(text=text)
+        return [UserUtteranceReverted()]
+
+class ActionNluLowConfidence(Action):
+
+    def name(self) -> Text:
+        return "action_nlu_low_confidence"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        metadata = tracker.latest_message["metadata"]
+        logging.info(metadata)
+        if "stop_playback_date" in metadata and not metadata["stop_playback_date"]:
+            text = ""
+        else:
+            text = "Czy możesz powtórzyć?"
         bot_event = next(e for e in reversed(tracker.events) if e["event"] == "bot")
         custom = {
             "blocks": bot_event["data"]["custom"]["blocks"]
@@ -92,6 +113,7 @@ class ActionOutOfScope(Action):
         else:
             dispatcher.utter_message(text=text)
         return [UserUtteranceReverted()]
+
 
 class ValidateInsuranceNumberForm(FormValidationAction):
     def name(self) -> Text:

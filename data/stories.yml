@@ -2,59 +2,108 @@ version: "2.0"
 
 stories:
 
-# Agent question flow
+  - story: affirm or deny at the beginning
+    steps:
+      - intent: connected
+      - action: utter_greet
+      - or:
+        - intent: affirm
+        - intent: deny
+      - action: action_default_fallback
 
-- story: annex general
-  steps:
-    - intent: annex
-    - action: utter_annex_clarify
+  - story: annex general
+    steps:
+      - intent: connected
+      - action: utter_greet
+      - intent: annex
+      - action: utter_annex_clarify
 
-- story: application general
-  steps:
-    - intent: application
-    - action: utter_application_clarify
+  - story: annex general again
+    steps:
+      - intent: connected
+      - action: utter_greet
+      - intent: annex
+      - action: utter_annex_clarify
+      - intent: annex
+      - action: utter_agent_care_transfer
 
-- story: question general
-  steps:
-    - intent: agent_question_general
-    - action: utter_agent_care_transfer
+  - story: application general
+    steps:
+      - intent: connected
+      - action: utter_greet
+      - intent: application
+      - action: utter_application_clarify
 
-- story: insurance question without insurance number
-  steps:
-  - action: insurance_number_form
-  - active_loop: insurance_number_form
-  - slot_was_set:
-    - insurance_number_verified: false
-  - active_loop: null
-  - action: utter_agent_care_transfer
+  - story: application general again
+    steps:
+      - intent: connected
+      - action: utter_greet
+      - intent: application
+      - action: utter_application_clarify
+      - intent: application
+      - action: utter_agent_care_transfer
 
-- story: insurance question with insurance number
-  steps:
-  - action: insurance_number_form
-  - active_loop: insurance_number_form
-  - slot_was_set:
-    - insurance_number_verified: true
-  - active_loop: null
-  - action: agent_authentication_form
-  - active_loop: agent_authentication_form
-  - active_loop: null
-  - action: action_perform_agent_authentication
-  - slot_was_set:
-    - agent_authenticated: false
-  - action: utter_agent_care_transfer
+  - story: question general
+    steps:
+      - intent: connected
+      - action: utter_greet
+      - intent: agent_question_general
+      - action: utter_agent_care_transfer
 
-- story: insurance question with insurance number
-  steps:
-  - action: insurance_number_form
-  - active_loop: insurance_number_form
-  - slot_was_set:
-    - insurance_number_verified: true
-  - active_loop: null
-  - action: agent_authentication_form
-  - active_loop: agent_authentication_form
-  - active_loop: null
-  - action: action_perform_agent_authentication
-  - slot_was_set:
-    - agent_authenticated: true
-  - action: action_select_utter_agent_question_bot_info
+  - story: insurance question without insurance number
+    steps:
+      - intent: connected
+      - action: utter_greet
+      - or:
+        - intent: agent_question_payments
+        - intent: agent_question_validity
+      - action: action_set_agent_question_path
+      - action: insurance_number_form
+      - active_loop: insurance_number_form
+      - slot_was_set:
+        - insurance_number_verified: false
+      - active_loop: null
+      - action: utter_agent_care_transfer
+
+  - story: insurance question with insurance number
+    steps:
+      - intent: connected
+      - action: utter_greet
+      - or:
+        - intent: agent_question_payments
+        - intent: agent_question_validity
+      - action: action_set_agent_question_path
+      - action: insurance_number_form
+      - active_loop: insurance_number_form
+      - slot_was_set:
+        - insurance_number_verified: true
+      - active_loop: null
+      - action: agent_authentication_form
+      - active_loop: agent_authentication_form
+      - active_loop: null
+      - action: action_perform_agent_authentication
+      - slot_was_set:
+        - agent_authenticated: false
+      - action: utter_agent_care_transfer
+
+  - story: insurance question with insurance number
+    steps:
+      - intent: connected
+      - action: utter_greet
+      - or:
+        - intent: agent_question_payments
+        - intent: agent_question_validity
+      - action: action_set_agent_question_path
+      - action: insurance_number_form
+      - active_loop: insurance_number_form
+      - slot_was_set:
+        - insurance_number_verified: true
+      - active_loop: null
+      - action: agent_authentication_form
+      - active_loop: agent_authentication_form
+      - active_loop: null
+      - action: action_perform_agent_authentication
+      - slot_was_set:
+        - agent_authenticated: true
+      - action: action_select_utter_agent_question_bot_info
 
