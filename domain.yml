@@ -179,6 +179,10 @@ responses:
                 payload: '/annex'
               - title: 'Aplikacja'
                 payload: '/application'
+              - title: 'Sprawdzenie ważności polisy'
+                payload: '/agent_question_validity'
+              - title: 'Sprawdzenie płatności dla polisy'
+                payload: '/agent_question_payments'
     - text: 'W czym mogę pomóc?'
 
   # UTTER -----------------------------------------------------------------------------
