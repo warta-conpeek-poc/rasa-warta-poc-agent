@@ -12,11 +12,10 @@ rules:
     - intent: connected
     - action: utter_greet
 
-- rule: Say nothing on connection stop
-  steps:
-  - intent: disconnected
-  - action: utter_disconnected
-
+  - rule: Say nothing on connection stop
+    steps:
+    - intent: disconnected
+    - action: utter_disconnected
 
   - rule: Say goodbye anytime the user says goodbye
     steps:

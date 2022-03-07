@@ -173,10 +173,12 @@ responses:
       custom:
         blocks:
           - text: ''
+        end_of_conversation:
     - channel: conpeek-text
       custom:
         blocks:
           - text: ''
+        end_of_conversation:
     - text: ''
 
   # UTTER -----------------------------------------------------------------------------
