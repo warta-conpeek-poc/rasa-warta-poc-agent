@@ -2,48 +2,53 @@ version: "2.0"
 
 rules:
 
-- rule: Say greet on start
-  steps:
-  - intent: connected
-  - action: utter_greet
+  - rule: Trigger response selector from button payload
+    steps:
+    - intent: trigger_response_selector
+    - action: action_trigger_response_selector
 
-- rule: Say goodbye anytime the user says goodbye
-  steps:
-  - intent: goodbye
-  - action: utter_goodbye
+  - rule: Say greet on start
+    steps:
+    - intent: connected
+    - action: utter_greet
 
-- rule: ASR low confidence
-  steps:
-  - intent: asr_low_confidence
-  - action: action_asr_low_confidence
+  - rule: Say goodbye anytime the user says goodbye
+    steps:
+    - intent: goodbye
+    - action: utter_goodbye
 
-- rule: NLU low confidence
-  steps:
-  - intent: nlu_fallback
-  - action: action_nlu_low_confidence
+  - rule: ASR low confidence
+    steps:
+    - intent: asr_low_confidence
+    - action: action_asr_low_confidence
 
-- rule: out-of-scope
-  steps:
-  - intent: out_of_scope
-  - action: action_out_of_scope
+  - rule: NLU low confidence
+    steps:
+    - intent: nlu_fallback
+    - action: action_nlu_low_confidence
 
-- rule:  inform out of form
-  steps:
-  - intent: inform
-  - action: action_default_fallback
+  - rule: out-of-scope
+    steps:
+    - intent: out_of_scope
+    - action: action_out_of_scope
 
-- rule: respond to FAQs
-  steps:
-  - intent: faq
-  - action: utter_faq
+  - rule:  inform out of form
+    steps:
+    - intent: inform
+    - action: action_default_fallback
 
-- rule: Activate insurance_number_form for agent insurance questions
-  steps:
-  - or:
-    - intent: agent_question_payments
-    - intent: agent_question_validity
-  - action: action_set_agent_question_path
-  - action: insurance_number_form
-  - active_loop: insurance_number_form
+  - rule: respond to FAQs
+    steps:
+    - intent: faq
+    - action: utter_faq
+
+  - rule: Activate insurance_number_form for agent insurance questions
+    steps:
+    - or:
+      - intent: agent_question_payments
+      - intent: agent_question_validity
+    - action: action_set_agent_question_path
+    - action: insurance_number_form
+    - active_loop: insurance_number_form
 
 

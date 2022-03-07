@@ -5,6 +5,7 @@ session_config:
   carry_over_slots_to_new_session: false
 
 intents:
+  - trigger_response_selector
   - connected
   - disconnected
   - asr_low_confidence
@@ -22,8 +23,12 @@ intents:
 entities:
   - given_insurance_number
   - given_agent_number
+  - retrieval_intent
 
 slots:
+  retrieval_intent:
+    type: any
+    influence_conversation: false
   agent_authenticated:
     type: bool
     influence_conversation: true
@@ -104,6 +109,7 @@ slots:
     influence_conversation: false
 
 actions:
+  - action_trigger_response_selector
   - action_session_start
   - action_asr_low_confidence
   - action_nlu_low_confidence
@@ -213,8 +219,25 @@ responses:
     - channel: conpeek-text
       custom:
         blocks:
-          - text: 'Doprecyzuj proszę swoje pytanie.'
-            typing_delay: 2000
+          - text: 'Wybierz temat, który Cię interesuje:'
+            typing_delay: 1000
+            buttons:
+              - title: 'Komentarz do aneksu'
+                payload: '/trigger_response_selector{"retrieval_intent":"faq/annex_comment"}'
+              - title: 'Ponowna wysyłka aneksu'
+                payload: '/trigger_response_selector{"retrieval_intent":"faq/annex_resend"}'
+              - title: 'Rodzaje aneksów'
+                payload: '/trigger_response_selector{"retrieval_intent":"faq/annex_types"}'
+              - title: 'Aneks rekalkulacyjny'
+                payload: '/trigger_response_selector{"retrieval_intent":"faq/annex_recalculation"}'
+              - title: 'Wystawienie aneksu'
+                payload: '/trigger_response_selector{"retrieval_intent":"faq/annex_creation"}'
+              - title: 'Wystawienie aneksu Ekstrabiznes'
+                payload: '/trigger_response_selector{"retrieval_intent":"faq/annex_extra_smart"}'
+              - title: 'Dodanie załącznika do aneksu'
+                payload: '/trigger_response_selector{"retrieval_intent":"faq/annex_attachment"}'
+              - title: 'Zatwierdzenie aneksu do polisy obcej'
+                payload: '/trigger_response_selector{"retrieval_intent":"faq/annex_foreign_approval"}'
     - text: 'Doprecyzuj proszę swoje pytanie.'
 
   # UTTER -----------------------------------------------------------------------------
@@ -226,8 +249,23 @@ responses:
     - channel: conpeek-text
       custom:
         blocks:
-          - text: 'Doprecyzuj proszę swoje pytanie.'
-            typing_delay: 2000
+          - text: 'Wybierz temat, który Cię interesuje:'
+            typing_delay: 1000
+            buttons:
+              - title: 'Skanowanie kodu Aztec'
+                payload: '/trigger_response_selector{"retrieval_intent":"faq/application_aztec"}'
+              - title: 'Ekran ładowania przy przejściu między polami'
+                payload: '/trigger_response_selector{"retrieval_intent":"faq/application_load_screen"}'
+              - title: 'Wspierane przeglądarki'
+                payload: '/trigger_response_selector{"retrieval_intent":"faq/application_browser"}'
+              - title: 'Logowanie do eAgent'
+                payload: '/trigger_response_selector{"retrieval_intent":"faq/application_login"}'
+              - title: 'Błąd logowania'
+                payload: '/trigger_response_selector{"retrieval_intent":"faq/application_login_error"}'
+              - title: 'Jednoczesne logowanie z wielu urządzeń'
+                payload: '/trigger_response_selector{"retrieval_intent":"faq/application_multi_login"}'
+              - title: 'Wolne działąnie aplikacji'
+                payload: '/trigger_response_selector{"retrieval_intent":"faq/application_slow"}'
     - text: 'Doprecyzuj proszę swoje pytanie.'
 
   # UTTER -----------------------------------------------------------------------------
