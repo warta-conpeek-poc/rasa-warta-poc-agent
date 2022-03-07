@@ -220,6 +220,13 @@ responses:
           export:
             next_action: 'project'
             project_name: 'Agent Care'
+            given_agent_number: '{given_agent_number}'
+            given_agent_pesel: '{given_agent_pesel}'
+            given_insurance_number: '{given_insurance_number}'
+            system_agent_number: '{system_agent_number}'
+            system_agent_pesel: '{system_agent_pesel}'
+            system_agent_name: '{system_agent_name}'
+            system_insurance_number: '{system_insurance_number}'
     - channel: conpeek-text
       custom:
         blocks:
@@ -296,7 +303,7 @@ responses:
                 payload: '/trigger_response_selector{"retrieval_intent":"faq/application_login_error"}'
               - title: 'Jednoczesne logowanie z wielu urządzeń'
                 payload: '/trigger_response_selector{"retrieval_intent":"faq/application_multi_login"}'
-              - title: 'Wolne działąnie aplikacji'
+              - title: 'Wolne działanie aplikacji'
                 payload: '/trigger_response_selector{"retrieval_intent":"faq/application_slow"}'
     - text: 'Doprecyzuj proszę swoje pytanie.'
 
