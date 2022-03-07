@@ -50,8 +50,13 @@ nlu:
     - 59052307276
     - 912001587844
     - 920018515507
+    - 9 2 0 0 1 8 5 1 5 5 0 7
     - jeden trzy pięć jedenaście osiem
     - dwa dwadzieścia trzy osiemnaście
+    - A 00 001 94 30 08
+    - A 0 0 0 0 1 9 4 3 0 0 8
+    - A00001943008
+
 
 - intent: annex
   examples: |
