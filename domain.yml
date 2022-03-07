@@ -90,6 +90,9 @@ slots:
   system_agent_pesel:
     type: any
     influence_conversation: false
+  system_agent_name:
+    type: any
+    influence_conversation: false
   system_insurance_number:
     type: any
     influence_conversation: false
@@ -192,6 +195,13 @@ responses:
           export:
             next_action: 'project'
             project_name: 'Agent Care'
+            given_agent_number: '{given_agent_number}'
+            given_agent_pesel: '{given_agent_pesel}'
+            given_insurance_number: '{given_insurance_number}'
+            system_agent_number: '{system_agent_number}'
+            system_agent_pesel: '{system_agent_pesel}'
+            system_agent_name: '{system_agent_name}'
+            system_insurance_number: '{system_insurance_number}'
     - text: 'Kieruję połączenie do konsultanta.'
 
   # UTTER -----------------------------------------------------------------------------
@@ -291,7 +301,7 @@ responses:
             sentence_end_silence_time: 3000
             speech_contexts:
               - phrases:
-                  - '$OPERAND'
+                  - '$OOV_CLASS_DIGIT_SEQUENCE'
             text_conditional_actions:
               -  regexp: '[0-9]{12}$'
                  end_sentence: True
@@ -315,7 +325,7 @@ responses:
             sentence_end_silence_time: 3000
             speech_contexts:
               - phrases:
-                  - "$OPERAND"
+                  - "$OOV_CLASS_DIGIT_SEQUENCE"
             text_conditional_actions:
               -  regexp: '[0-9]{11}$'
                  end_sentence: True
@@ -338,7 +348,7 @@ responses:
           sentence_end_silence_time: 3000
           speech_contexts:
             - phrases:
-                - '$OPERAND'
+                - '$OOV_CLASS_DIGIT_SEQUENCE'
           text_conditional_actions:
             -  regexp: '[0-9]{11}$'
                end_sentence: True

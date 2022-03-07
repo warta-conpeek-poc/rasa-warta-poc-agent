@@ -119,9 +119,6 @@ class ValidateInsuranceNumberForm(FormValidationAction):
     def name(self) -> Text:
         return "validate_insurance_number_form"
 
-    # async def extract_given_insurance_number(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict) -> Dict[Text, Any]:
-    #     logging.critical(f"extract_given_insurance_number")
-
     def validate_given_insurance_number(self, slot_value: Any, dispatcher: CollectingDispatcher, tracker: Tracker, domain: DomainDict,) -> Dict[Text, Any]:
         if not slot_value:
             slot_value = "empty"
@@ -130,7 +127,6 @@ class ValidateInsuranceNumberForm(FormValidationAction):
         validate_counter += 1
         words = re.split('-|\s', slot_value)
         words = [x for x in words if x]
-        system_insurance_number = None
         given_insurance_number = ""
         for word in words:
             if word.isdigit():
@@ -163,16 +159,18 @@ class ValidateInsuranceNumberForm(FormValidationAction):
                 next_installment_date = insurance_payment_1_date
             insurance_active = baza_polisy_dict[given_insurance_number]["Polisa aktywna"]
             insurance_end_date = baza_polisy_dict[given_insurance_number]["Data zakończenia"]
-            insurance_subject_type = baza_polisy_dict[given_insurance_number]["Przedmiot ubezpieczenia"]
-            insurance_agent_pesel = baza_polisy_dict[given_insurance_number]["Pesel agenta"]
-            insurance_agent_number = baza_polisy_dict[given_insurance_number]["Nr pośrednika"]
+            system_subject_type = baza_polisy_dict[given_insurance_number]["Przedmiot ubezpieczenia"]
+            system_agent_pesel = baza_polisy_dict[given_insurance_number]["Pesel agenta"]
+            system_agent_number = baza_polisy_dict[given_insurance_number]["Nr pośrednika"]
+            system_agent_name = baza_polisy_dict[given_insurance_number]["Imię i nazwisko agenta"]
             slots = {
                 "given_insurance_number": given_insurance_number,
                 "system_insurance_number": system_insurance_number,
                 "insurance_number_verified": True,
-                "system_subject_type": insurance_subject_type,
-                "system_agent_pesel": insurance_agent_pesel,
-                "system_agent_number": insurance_agent_number,
+                "system_subject_type": system_subject_type,
+                "system_agent_pesel": system_agent_pesel,
+                "system_agent_number": system_agent_number,
+                "system_agent_name": system_agent_name,
                 "insurance_payment_1_amount": insurance_payment_1_amount,
                 "insurance_payment_1_done": insurance_payment_1_done,
                 "insurance_payment_1_date": insurance_payment_1_date,
