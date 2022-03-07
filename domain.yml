@@ -175,9 +175,9 @@ responses:
           - text: 'W czym mogę pomóc?'
             typing_delay: 1000
             buttons:
-              - title: 'Aneks'
+              - title: 'Pytanie dotyczące aneksu'
                 payload: '/annex'
-              - title: 'Aplikacja'
+              - title: 'Pytanie dotyczące aplikacji'
                 payload: '/application'
               - title: 'Sprawdzenie ważności polisy'
                 payload: '/agent_question_validity'
