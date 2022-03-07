@@ -197,7 +197,7 @@ responses:
       custom:
         blocks:
           - text: 'Do widzenia.'
-            typing_delay: 2000
+            typing_delay: 1000
         end_of_conversation:
     - text: 'Do widzenia.'
 
@@ -215,7 +215,7 @@ responses:
       custom:
         blocks:
           - text: 'Kieruję połączenie do konsultanta.'
-            typing_delay: 2000
+            typing_delay: 1000
         end_of_conversation:
           export:
             next_action: 'project'
@@ -289,62 +289,66 @@ responses:
 
   # UTTER -----------------------------------------------------------------------------
   utter_agent_question_payment_done:
-  - channel: conpeek-voice
-    custom:
-      blocks:
-      - text: "Wszystkie płatności zostały zaksięgowane. Dziękuję za rozmowę."
-      end_of_conversation:
-  - channel: conpeek-text
-    custom:
-      blocks:
-      - text: "Wszystkie płatności zostały zaksięgowane. Dziękuję za rozmowę."
-      end_of_conversation:
-  - text: "Wszystkie płatności zostały zaksięgowane. Dziękuję za rozmowę."
+    - channel: conpeek-voice
+      custom:
+        blocks:
+        - text: "Wszystkie płatności zostały zaksięgowane. Dziękuję za rozmowę."
+        end_of_conversation:
+    - channel: conpeek-text
+      custom:
+        blocks:
+        - text: "Wszystkie płatności zostały zaksięgowane. Dziękuję za rozmowę."
+          typing_delay: 1000
+        end_of_conversation:
+    - text: "Wszystkie płatności zostały zaksięgowane. Dziękuję za rozmowę."
 
   # UTTER -----------------------------------------------------------------------------
   utter_agent_question_payment_waiting:
-  - channel: conpeek-voice
-    custom:
-      blocks:
-      - text: 'Do zapłaty jest {next_installment_number} rata w wysokości {next_installment_amount}. Termin płatności to {next_installment_date}.'
-        ssml: 'Do zapłaty jest <say-as interpret-as="ordinal">{next_installment_number}</say-as> rata w wysokości {next_installment_amount}. Termin płatności to <say-as interpret-as="date" format="yyyy-mm-dd">{next_installment_date}</say-as>.'
-      end_of_conversation:
-  - channel: conpeek-text
-    custom:
-      blocks:
-      - text: 'Do zapłaty jest {next_installment_number} rata w wysokości {next_installment_amount} złotych. Termin płatności to {next_installment_date}.'
-      end_of_conversation:
-  - text: 'Do zapłaty jest {next_installment_number} rata w wysokości {next_installment_amount} złotych. Termin płatności to {next_installment_date}.'
+    - channel: conpeek-voice
+      custom:
+        blocks:
+        - text: 'Do zapłaty jest {next_installment_number} rata w wysokości {next_installment_amount}. Termin płatności to {next_installment_date}.'
+          ssml: 'Do zapłaty jest <say-as interpret-as="ordinal">{next_installment_number}</say-as> rata w wysokości {next_installment_amount}. Termin płatności to <say-as interpret-as="date" format="yyyy-mm-dd">{next_installment_date}</say-as>.'
+        end_of_conversation:
+    - channel: conpeek-text
+      custom:
+        blocks:
+        - text: 'Do zapłaty jest {next_installment_number} rata w wysokości {next_installment_amount} złotych. Termin płatności to {next_installment_date}.'
+          typing_delay: 1000
+        end_of_conversation:
+    - text: 'Do zapłaty jest {next_installment_number} rata w wysokości {next_installment_amount} złotych. Termin płatności to {next_installment_date}.'
 
   # UTTER -----------------------------------------------------------------------------
   utter_agent_question_insurance_active:
-  - channel: conpeek-voice
-    custom:
-      blocks:
-      - text: 'Polisa jest aktywna do dnia {insurance_end_date}.'
-        ssml: 'Polisa jest aktywna do dnia <say-as interpret-as="date" format="yyyy-mm-dd">{insurance_end_date}</say-as>.'
-      end_of_conversation:
-  - channel: conpeek-text
-    custom:
-      blocks:
-      - text: 'Polisa jest aktywna do dnia {insurance_end_date}.'
-      end_of_conversation:
-  - text: 'Polisa jest aktywna do dnia {insurance_end_date}.'
+    - channel: conpeek-voice
+      custom:
+        blocks:
+        - text: 'Polisa jest aktywna do dnia {insurance_end_date}.'
+          ssml: 'Polisa jest aktywna do dnia <say-as interpret-as="date" format="yyyy-mm-dd">{insurance_end_date}</say-as>.'
+        end_of_conversation:
+    - channel: conpeek-text
+      custom:
+        blocks:
+        - text: 'Polisa jest aktywna do dnia {insurance_end_date}.'
+          typing_delay: 1000
+        end_of_conversation:
+    - text: 'Polisa jest aktywna do dnia {insurance_end_date}.'
 
   # UTTER -----------------------------------------------------------------------------
   utter_agent_question_insurance_inactive:
-  - channel: conpeek-voice
-    custom:
-      blocks:
-      - text: 'Polisa jest nieaktywna.'
-        ssml: 'Polisa jest nieaktywna.'
-      end_of_conversation:
-  - channel: conpeek-text
-    custom:
-      blocks:
-      - text: 'Polisa jest nieaktywna.'
-      end_of_conversation:
-  - text: 'Polisa jest nieaktywna.'
+    - channel: conpeek-voice
+      custom:
+        blocks:
+        - text: 'Polisa jest nieaktywna.'
+          ssml: 'Polisa jest nieaktywna.'
+        end_of_conversation:
+    - channel: conpeek-text
+      custom:
+        blocks:
+        - text: 'Polisa jest nieaktywna.'
+          typing_delay: 1000
+        end_of_conversation:
+    - text: 'Polisa jest nieaktywna.'
 
 
   # ---------------------- FORM INSURANCE NUMBER ------------------------------------------
@@ -430,7 +434,7 @@ responses:
     custom:
       blocks:
         - text: 'Podczas wysyłki aneksu do CUUD można zawrzeć w nim komentarz w dedykowanym polu po użyciu przycisku Wyślij do akceptacji.'
-          typing_delay: 2000
+          typing_delay: 1000
       end_of_conversation:
   - text: 'Po użyciu przycisku Wyślij do akceptacji można zawrzeć w nim komentarz w dedykowanym polu.'
 
@@ -445,7 +449,7 @@ responses:
     custom:
       blocks:
         - text: 'Gdy aneks wróci od CUUD bez akceptacji lub odrzucenia, a z prośbą o więcej danych, trafia do zakładki Oferty, skąd, po wprowadzeniu zmian, dostarczeniu informacji wymaganych przez CUUD, można go ponownie odesłać używając opcji Wyślij do akceptacji, tak, jak podczas jego pierwszej wysyłki.'
-          typing_delay: 2000
+          typing_delay: 1000
       end_of_conversation:
   - text: 'Po uzupełnieniu danych można go ponownie odesłać używając opcji Wyślij do akceptacji, tak, jak podczas jego pierwszej wysyłki.'
 
@@ -460,17 +464,17 @@ responses:
     custom:
       blocks:
         - text: 'Aneksy do polis wystawionych poprzez eAgent dostępne w aplikacji, to:'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'Dla produktu komunikacyjnego: <li>zmiana danych klienta <li>zmiana ubezpieczonych <li>zmiana danych przedmiotu ubezpieczenia <li>zmiana sumy ubezpieczenia <li>zmiana sposobu użytkowania pojazdu <li>zmiana w płatnościach'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'Dla produktu mieszkaniowego: <li>zmiana danych klienta <li>zmiana ubezpieczonych <li>korekta adresu przedmiotu ubezpieczenia <li>zmiana charakterystyki przedmiotu ubezpieczenia <li>zmiana sumy ubezpieczenia <li>zmiana w płatnościach <li>wystawienie oraz wycofanie cesji'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'Pozostałe należy wystawić w AUW uprzednio rejestrując polisę w Warta XXI.'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'Dowiedz się więcej...'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'https://wiedza.warta.pl/wdrazamy-aneksy/'
-          typing_delay: 2000
+          typing_delay: 1000
       end_of_conversation:
   - text: 'W systemie mamy wiele aneksów więc wysyłam Ci wiadomość SMS z linkiem do interesujących Cię informacji.'
 
@@ -485,9 +489,9 @@ responses:
     custom:
       blocks:
         - text: 'Na ten moment aneks rekalkulacyjny nie jest dostępny w eAgent.'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'Taki aneks należy wystawić w AUW.'
-          typing_delay: 2000
+          typing_delay: 1000
       end_of_conversation:
   - text: 'Na ten moment aneks rekalkulacyjny nie jest dostępny w eAgent, taki aneks należy wystawić w AUW.'
 
@@ -502,17 +506,17 @@ responses:
     custom:
       blocks:
         - text: 'Aneks w systemie eAgent można wykonać tylko dla polisy wystawionej w systemie eAgent poprzez menu Czynności z poziomu listy polis klikając opcję "Wystaw aneks",  bądź przechodząc do zakładki czynności z widoku 360 polisy - obsługa posprzedażowa - "Aneks".'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'Po wybraniu rodzaju aneksu i dokonaniu zmiany, należy użyć opcji Zatwierdź zmianę, a następnie Wystaw aneks.'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'Istnieje możliwość edytowania zmian na aneksie przed jego wystawieniem.'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'Służą do tego przyciski: <li>lupy, który umożliwia podgląd aneksu do wystawienia oraz <li>x, który umożliwia usunięcie kalkulowanego aneksu.'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'Dowiedz się więcej...'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'https://wiedza.warta.pl/wdrazamy-aneksy/'
-          typing_delay: 2000
+          typing_delay: 1000
       end_of_conversation:
   - text: 'W systemie mamy wiele aneksów więc wysyłam Ci wiadomość SMS z linkiem do interesujących Cię informacji.'
 
@@ -527,7 +531,7 @@ responses:
     custom:
       blocks:
         - text: 'Możliwość wystawieia aneksu jest tylko w AUW, po wcześniejszym zarejestrowaniu polisy'
-          typing_delay: 2000
+          typing_delay: 1000
       end_of_conversation:
   - text: 'Możliwość wystawieia aneksu jest tylko w AUW, po wcześniejszym zarejestrowaniu polisy'
 
@@ -542,7 +546,7 @@ responses:
     custom:
       blocks:
         - text: 'Jeśli podczas wysyłki aneksu do CUUD wiemy, że wymagany będzie jakiś załącznik do polisy lub CUUD odsyła wniosek z odpowiednią prośbą załącznik, możemy dodać w zakładce Załączniki na widoku 360 polisy, do której przygotowywany jest aneks, informując o dodanym pliku CUUD poprzez kompetencję Inne odstępstwa.'
-          typing_delay: 2000
+          typing_delay: 1000
       end_of_conversation:
   - text: 'Załącznik możesz dodać w zakładce Załączniki na widoku 360 polisy, do której przygotowywany jest aneks, informując o dodanym pliku CUUD poprzez kompetencję Inne odstępstwa.'
 
@@ -557,11 +561,11 @@ responses:
     custom:
       blocks:
         - text: 'Akcje dotyczące zatwierdzania i anulowania zostały dodane do Widoku polisy w zakladce Czynności, dzięki czemu będzie można zatwierdzać/anulować operacje wykonane na polisie obcej.'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'UWAGA!'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'Każda z akcji będzie dostępna tylko dla agenta, który wykonał daną operację.'
-          typing_delay: 2000
+          typing_delay: 1000
       end_of_conversation:
   - text: 'Akcje dotyczące zatwierdzania i anulowania zostały dodane do Widoku polisy w zakladce Czynności, dzięki czemu będzie można zatwierdzać/anulować operacje wykonane na polisie obcej. UWAGA! Każda z akcji będzie dostępna tylko dla agenta, który wykonał daną operację.'
 
@@ -576,13 +580,13 @@ responses:
     custom:
       blocks:
         - text: 'Dostęp do aplikacji Warta Agent można uzyskać poprzez zalogowanie się do sklepu Google Play lub Apple App Store, gdzie można ją bezpłatnie pobrać.'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'Pełna instrukcja korzystania z aplikacji jest dostępna w Bazie Wiedzy.'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'Dowiedz się więcej...'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'https://wiedza.warta.pl/wp-content/uploads/2018/07/AZTEC-Instrukcja-Obs%C5%82ugi-Warta-Agent-1.pdf'
-          typing_delay: 2000
+          typing_delay: 1000
       end_of_conversation:
   - text: 'Dostęp do aplikacji Warta Agent można uzyskać poprzez zalogowanie się do sklepu Google Play lub Apple App Store, gdzie można ją bezpłatnie pobrać. Pełna instrukcja korzystania z aplikacji jest dostępna w Bazie Wiedzy. Wysyłam Ci SMS z linkiem Bazy Wiedzy.'
 
@@ -597,13 +601,13 @@ responses:
     custom:
       blocks:
         - text: 'Pojawiający się ekran ładowania podczas przejść pomiędzy formularzami/polami na ekranach, związany jest z automatycznym zapisywaniem poszczególnych danych w kalkulacji.'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'Proces ten ma na celu zminimalizowanie prawdopodobieństwa utraty danych.'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'Ciągła optymalizacja systemu jest jednym z naszych głównych założeń w projekcie, by korzystanie z aplikacji było jak najszybsze i jak najwygodniejsze.'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'Wkrótce pojawią się odpowiednie usprawnienia przyspieszające cały proces.'
-          typing_delay: 2000
+          typing_delay: 1000
       end_of_conversation:
   - text: 'Jest to trochę nietypowe, ale wkrótce pojawią się odpowiednie usprawnienia przyspieszające cały proces.'
 
@@ -618,11 +622,11 @@ responses:
     custom:
       blocks:
         - text: 'System będzie wspierany na wskazanych poniżej przeglądarkach (wraz z ich minimalnymi wersjami): <li>Firefox v.30.x <li>Chrome v.33.x <li>Opera v.20.x <li>Safari v.5.x'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'Jednak sugerowaną przeglądarką do systemu eAgent jest Chrome.'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'Korzystanie z aplikacji przez tę przeglądarkę pozwala na płynną i szybką pracę.'
-          typing_delay: 2000
+          typing_delay: 1000
       end_of_conversation:
   - text: 'Sugerowaną przeglądarką do systemu eAgent jest Chrome.'
 
@@ -637,7 +641,7 @@ responses:
     custom:
       blocks:
         - text: 'Do eAgent zalogujesz się używając tego samego loginu co do AUW (Złoty login).'
-          typing_delay: 2000
+          typing_delay: 1000
       end_of_conversation:
   - text: 'Do eAgent zalogujesz się używając tego samego loginu co do AUW (Złoty login).'
 
@@ -652,15 +656,15 @@ responses:
     custom:
       blocks:
         - text: 'Jeśli podczas logowania eAgent wyświetli komunikat błędu należy użyć opcji "menu_logout" i wpisać pełny adres aplikacji w pasku adresu przeglądarki.'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'Sytuacja spowodowana jest próbą zalogowania do aplikacji na inny login, niż dotychczas.'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'Po ponownym załadowaniu strony zalogowanie na inny login będzie możliwe.'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'Dowiedz się więcej...'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'https://wiedza.warta.pl/co-w-sytuacji-gdy-przy-logowaniu-do-eagent-pojawia-sie-blad-logowanie-na-rozne-loginy'
-          typing_delay: 2000
+          typing_delay: 1000
       end_of_conversation:
   - text: 'Jeśli podczas logowania eAgent wyświetli komunikat błędu należy użyć opcji menu_logout i wpisać pełny adres aplikacji w pasku adresu przeglądarki.'
 
@@ -675,7 +679,7 @@ responses:
     custom:
       blocks:
         - text: 'Istnieje możliwość jednoczesnego zalogowania się tym samym loginem na kilku urządzeniach, przeglądarkach lub kartach.'
-          typing_delay: 2000
+          typing_delay: 1000
       end_of_conversation:
   - text: 'Możesz jednoczesnego zalogowania się tym samym loginem na kilku urządzeniach, przeglądarkach lub kartach.'
 
@@ -690,15 +694,15 @@ responses:
     custom:
       blocks:
         - text: 'W przypadku spowolnienia programu eAgent, proszę spróbować przejść do innej przeglądarki internetowej.'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'Zalecaną przeglądarką jest Google Chrome.'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'W Google Chrome warto wyczyścić tymczasowe pliki internetowe oraz pliki cookies.'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'Opcję tą można znaleźć w prawym górnym rogu przeglądarki w zakładce <dostosowywanie i  kontrolowanie Google Chrome> (ikona- trzy pionowe kropki).'
-          typing_delay: 2000
+          typing_delay: 1000
         - text: 'Następnie należy wybrać zakładkę <Historia> i w oknie <Historia> wybrać "Wyczyść dane przeglądania".'
-          typing_delay: 2000
+          typing_delay: 1000
       end_of_conversation:
   - text: 'W przypadku spowolnienia programu eAgent, proszę spróbować przejść do innej przeglądarki internetowej. Zalecaną przeglądarką jest Google Chrome.'
 
