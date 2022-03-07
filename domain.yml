@@ -144,7 +144,7 @@ responses:
       custom:
         blocks:
           - text: 'Coś poszło nie tak. To jest komunikat diagnostyczny.'
-            typing_delay: 2000
+            typing_delay: 1000
     - text: 'Coś poszło nie tak. To jest komunikat diagnostyczny.'
 
   # UTTER -----------------------------------------------------------------------------
@@ -164,7 +164,12 @@ responses:
       custom:
         blocks:
           - text: 'W czym mogę pomóc?'
-            typing_delay: 2000
+            typing_delay: 1000
+            buttons:
+              - title: 'Aneks'
+                payload: '/annex'
+              - title: 'Aplikacja'
+                payload: '/application'
     - text: 'W czym mogę pomóc?'
 
   # UTTER -----------------------------------------------------------------------------
@@ -268,7 +273,7 @@ responses:
             buttons:
               - title: 'Skanowanie kodu Aztec'
                 payload: '/trigger_response_selector{"retrieval_intent":"faq/application_aztec"}'
-              - title: 'Ekran ładowania przy przejściu między polami'
+              - title: 'Ekran ładowania przejście między polami'
                 payload: '/trigger_response_selector{"retrieval_intent":"faq/application_load_screen"}'
               - title: 'Wspierane przeglądarki'
                 payload: '/trigger_response_selector{"retrieval_intent":"faq/application_browser"}'
