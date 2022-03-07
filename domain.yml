@@ -149,6 +149,15 @@ responses:
 
   # UTTER -----------------------------------------------------------------------------
   utter_default:
+    - channel: conpeek-voice
+      custom:
+        blocks:
+          - text: 'Przepraszam, ale nie zrozumiałem. Czy możesz powtórzyć?'
+    - channel: conpeek-text
+      custom:
+        blocks:
+          - text: 'Przepraszam, ale nie zrozumiałem. Czy możesz powtórzyć?'
+            typing_delay: 1000
     - text: 'Przepraszam, ale nie zrozumiałem. Czy możesz powtórzyć?'
 
 
@@ -159,7 +168,7 @@ responses:
         blocks:
           - text: 'W czym mogę pomóc?'
             sentence_time_max: 30000
-            sentence_end_silence_time: 3000
+            sentence_end_silence_time: 1800
     - channel: conpeek-text
       custom:
         blocks:
@@ -235,6 +244,8 @@ responses:
       custom:
         blocks:
           - text: 'Doprecyzuj proszę swoje pytanie.'
+            sentence_time_max: 30000
+            sentence_end_silence_time: 1800
     - channel: conpeek-text
       custom:
         blocks:
@@ -265,6 +276,8 @@ responses:
       custom:
         blocks:
           - text: 'Doprecyzuj proszę swoje pytanie.'
+            sentence_time_max: 30000
+            sentence_end_silence_time: 1800
     - channel: conpeek-text
       custom:
         blocks:
@@ -340,7 +353,6 @@ responses:
       custom:
         blocks:
         - text: 'Polisa jest nieaktywna.'
-          ssml: 'Polisa jest nieaktywna.'
         end_of_conversation:
     - channel: conpeek-text
       custom:
@@ -404,7 +416,7 @@ responses:
   - channel: conpeek-voice
     custom:
       blocks:
-        - text: 'Podaj proszę swój numer pesel.'
+        - text: 'Podaj proszę numer pesel.'
           sentence_time_max: 30000
           sentence_end_silence_time: 3000
           speech_contexts:
@@ -418,9 +430,9 @@ responses:
   - channel: conpeek-text
     custom:
       blocks:
-        - text: 'Podaj proszę swój numer pesel.'
+        - text: 'Podaj proszę numer pesel.'
           typing_delay: 1000
-  - text: 'Podaj proszę swój numer pesel.'
+  - text: 'Podaj proszę numer pesel.'
 
   # ---------------------- FAQ SECTION ------------------------------------------------
   # UTTER -----------------------------------------------------------------------------
