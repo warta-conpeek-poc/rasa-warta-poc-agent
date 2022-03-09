@@ -41,7 +41,6 @@ nlu:
     - nigdy
     - nie ma mowy
     - nie zgadzam się
-    - w życiu
     - w żadnym wypadku
 
 - intent: inform
@@ -56,7 +55,6 @@ nlu:
     - A 00 001 94 30 08
     - A 0 0 0 0 1 9 4 3 0 0 8
     - A00001943008
-
 
 - intent: annex
   examples: |

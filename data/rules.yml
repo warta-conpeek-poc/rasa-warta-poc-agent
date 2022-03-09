@@ -37,7 +37,7 @@ rules:
     - intent: out_of_scope
     - action: action_out_of_scope
 
-  - rule:  inform out of form
+  - rule:  inform out of form loop
     steps:
     - intent: inform
     - action: action_default_fallback
