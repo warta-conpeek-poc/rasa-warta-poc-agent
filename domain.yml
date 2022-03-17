@@ -192,7 +192,6 @@ responses:
             buttons:
               - title: 'Pytanie dotyczące aneksu'
                 payload: '/annex'
-                image: 'https://www.warta.pl/files/images/zdjecia/centrum_prasowe/warta_logo_podstawowy_CMYK.jpg'
               - title: 'Pytanie dotyczące aplikacji'
                 payload: '/application'
               - title: 'Sprawdzenie ważności polisy'
