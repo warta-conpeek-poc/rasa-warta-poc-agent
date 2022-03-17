@@ -104,7 +104,13 @@ slots:
   system_subject_type:
     type: text
     influence_conversation: false
-  validate_counter:
+  validate_counter_given_insurance_number:
+    type: any
+    influence_conversation: false
+  validate_counter_given_agent_pesel:
+    type: any
+    influence_conversation: false
+  validate_counter_given_agent_number:
     type: any
     influence_conversation: false
 
@@ -146,6 +152,14 @@ responses:
           - text: 'Coś poszło nie tak. To jest komunikat diagnostyczny.'
             typing_delay: 1000
     - text: 'Coś poszło nie tak. To jest komunikat diagnostyczny.'
+
+  # UTTER -----------------------------------------------------------------------------
+  utter_retry:
+    - channel: conpeek-voice
+      custom:
+        blocks:
+        - text: 'Spróbujmy jeszcze raz.'
+    - text: 'Spróbujmy jeszcze raz.'
 
   # UTTER -----------------------------------------------------------------------------
   utter_default:

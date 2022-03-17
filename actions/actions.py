@@ -31,6 +31,32 @@ with open("actions/baza_polisy_utf8.csv") as f:
     for row in f_csv:
         baza_polisy_dict[row['Nr polisy']] = row
 
+db_male_firstname = []
+with open("actions/IMIONA_MESKIE.csv") as f:
+    f_csv = csv.DictReader(f, delimiter=',')
+    for row in f_csv:
+        db_male_firstname.append(row['IMIĘ_PIERWSZE'])
+
+db_female_firstname = []
+with open("actions/IMIONA_ZENSKIE.csv") as f:
+    f_csv = csv.DictReader(f, delimiter=',')
+    for row in f_csv:
+        db_male_firstname.append(row['IMIĘ_PIERWSZE'])
+
+db_male_lastname = []
+with open("actions/NAZWISKA_MESKIE.csv") as f:
+    f_csv = csv.DictReader(f, delimiter=',')
+    for row in f_csv:
+        db_male_firstname.append(row['Nazwisko aktualne'])
+
+db_female_lastname = []
+with open("actions/NAZWISKA_ZENSKIE.csv") as f:
+    f_csv = csv.DictReader(f, delimiter=',')
+    for row in f_csv:
+        db_male_firstname.append(row['Nazwisko aktualne'])
+
+
+
 class ActionSessionStart(Action):
 
     def name(self) -> Text:
@@ -41,7 +67,9 @@ class ActionSessionStart(Action):
         events = [SessionStarted(), ActionExecuted("action_listen")]
         metadata = tracker.get_slot("session_started_metadata")
         logging.critical(metadata)
-        events.append(SlotSet("validate_counter", 0))
+        events.append(SlotSet("validate_counter_given_insurance_number", 0))
+        events.append(SlotSet("validate_counter_given_agent_pesel", 0))
+        events.append(SlotSet("validate_counter_given_agent_number", 0))
         return events
 
 class ActionTriggerResponseSelector(Action):
@@ -134,7 +162,7 @@ class ValidateInsuranceNumberForm(FormValidationAction):
         if not slot_value:
             slot_value = "empty"
         validate_limit = 2
-        validate_counter = tracker.get_slot("validate_counter")
+        validate_counter = tracker.get_slot("validate_counter_given_insurance_number")
         validate_counter += 1
         words = re.split('-|\s', slot_value)
         words = [x for x in words if x]
@@ -193,7 +221,7 @@ class ValidateInsuranceNumberForm(FormValidationAction):
                 "next_installment_number": next_installment_number,
                 "next_installment_amount": next_installment_amount,
                 "next_installment_date": next_installment_date,
-                "validate_counter": 0
+                "validate_counter_given_insurance_number": 0
             }
             logging.critical("Setting slots:")
             logging.critical(slots)
@@ -202,13 +230,14 @@ class ValidateInsuranceNumberForm(FormValidationAction):
                 slots = {
                     "given_insurance_number": slot_value,
                     "insurance_number_verified": False,
-                    "validate_counter": 0
+                    "validate_counter_given_insurance_number": 0
                 }
             else:
+                dispatcher.utter_message(response="utter_retry")
                 slots = {
                     "given_insurance_number": None,
                     "insurance_number_verified": False,
-                    "validate_counter": validate_counter
+                    "validate_counter_given_insurance_number": validate_counter
                 }
         return slots
 
@@ -221,7 +250,7 @@ class ValidateAgentAuthenticationForm(FormValidationAction):
         if not slot_value:
             slot_value = "-"
         validate_limit = 2
-        validate_counter = tracker.get_slot("validate_counter")
+        validate_counter = tracker.get_slot("validate_counter_given_agent_number")
         validate_counter += 1
         words = slot_value.split()
         given_agent_number = words[0][0]
@@ -236,18 +265,19 @@ class ValidateAgentAuthenticationForm(FormValidationAction):
         if match :
             slots = {
                 "given_agent_number": given_agent_number.upper(),
-                "validate_counter": 0
+                "validate_counter_given_agent_number": 0
             }
         else:
             if validate_counter > validate_limit:
                 slots = {
                     "given_agent_number": slot_value,
-                    "validate_counter": 0
+                    "validate_counter_given_agent_number": 0
                 }
             else:
+                dispatcher.utter_message(response="utter_retry")
                 slots = {
                     "given_agent_number": None,
-                    "validate_counter": validate_counter
+                    "validate_counter_given_agent_number": validate_counter
                 }
         logging.critical(slots)
         return slots
@@ -256,7 +286,7 @@ class ValidateAgentAuthenticationForm(FormValidationAction):
         if not slot_value:
             slot_value = "-"
         validate_limit = 2
-        validate_counter = tracker.get_slot("validate_counter")
+        validate_counter = tracker.get_slot("validate_counter_given_agent_pesel")
         validate_counter += 1
         given_agent_pesel = ""
         words = slot_value.split()
@@ -269,18 +299,19 @@ class ValidateAgentAuthenticationForm(FormValidationAction):
         if match :
             slots = {
                 "given_agent_pesel": given_agent_pesel,
-                "validate_counter": 0
+                "validate_counter_given_agent_pesel": 0
             }
         else:
             if validate_counter > validate_limit:
                 slots = {
                     "given_agent_pesel": slot_value,
-                    "validate_counter": 0
+                    "validate_counter_given_agent_pesel": 0
                 }
             else:
+                dispatcher.utter_message(response="utter_retry")
                 slots = {
                     "given_agent_pesel": None,
-                    "validate_counter": validate_counter
+                    "validate_counter_given_agent_pesel": validate_counter
                 }
         logging.critical(slots)
         return slots
