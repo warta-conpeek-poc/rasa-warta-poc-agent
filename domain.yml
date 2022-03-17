@@ -186,13 +186,13 @@ responses:
     - channel: conpeek-text
       custom:
         blocks:
-          - image_url: 'https://ubiquity.pl/warta.png'
+          - image_url: 'https://www.warta.pl/files/images/zdjecia/centrum_prasowe/warta_logo_podstawowy_CMYK.jpg'
           - text: 'W czym mogę pomóc?'
             typing_delay: 1000
             buttons:
               - title: 'Pytanie dotyczące aneksu'
                 payload: '/annex'
-                image: 'https://ubiquity.pl/warta.png'
+                image: 'https://www.warta.pl/files/images/zdjecia/centrum_prasowe/warta_logo_podstawowy_CMYK.jpg'
               - title: 'Pytanie dotyczące aplikacji'
                 payload: '/application'
               - title: 'Sprawdzenie ważności polisy'
