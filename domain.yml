@@ -192,6 +192,7 @@ responses:
             buttons:
               - title: 'Pytanie dotyczące aneksu'
                 payload: '/annex'
+                image: 'https://ubiquity.pl/warta.png'
               - title: 'Pytanie dotyczące aplikacji'
                 payload: '/application'
               - title: 'Sprawdzenie ważności polisy'
