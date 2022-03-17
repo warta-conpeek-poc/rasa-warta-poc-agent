@@ -186,7 +186,8 @@ responses:
     - channel: conpeek-text
       custom:
         blocks:
-          - text: 'W czym mogę pomóc?'
+          - image_url: 'https://www.warta.pl/assets/images/logo-warta.svg'
+            text: 'W czym mogę pomóc?'
             typing_delay: 1000
             buttons:
               - title: 'Pytanie dotyczące aneksu'
