@@ -1,0 +1,24 @@
+version: "2.0"
+stories:
+- story: Story from Conversation ID 33fe2772-6b0b-4aaa-bc6e-901d8d473ca8
+  steps:
+  - slot_was_set:
+    - validate_counter_given_insurance_number: 0
+  - slot_was_set:
+    - validate_counter_given_agent_pesel: 0
+  - slot_was_set:
+    - validate_counter_given_agent_number: 0
+  - intent: connected
+    user: |-
+      __PEER_CONNECTED__
+  - action: utter_greet
+  - slot_was_set:
+    - validate_counter_given_insurance_number: 0
+  - slot_was_set:
+    - validate_counter_given_agent_pesel: 0
+  - slot_was_set:
+    - validate_counter_given_agent_number: 0
+  - intent: disconnected
+    user: |-
+      __PEER_DISCONNECTED__
+  - action: utter_disconnected
