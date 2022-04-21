@@ -1,29 +1,24 @@
 version: "2.0"
-
 nlu:
-
 - intent: connected
   examples: |
     - __PEER_CONNECTED__
     - __peer_connected__
-
 - intent: disconnected
   examples: |
     - __PEER_DISCONNECTED__
     - __peer_disconnected__
-
+    - _peer_disconeted_
 - intent: asr_low_confidence
   examples: |
     - __LOW_CONFIDENCE__
     - __low_confidence__
-
 - intent: out_of_scope
   examples: |
     - jaki dziś mamy dzień?
     - jak masz na imię?
     - ile masz lat?
     - jaka jest pogoda?
-
 - intent: affirm
   examples: |
     - tak
@@ -34,7 +29,6 @@ nlu:
     - poproszę
     - zgoda
     - zgadzam się
-
 - intent: deny
   examples: |
     - nie
@@ -42,7 +36,6 @@ nlu:
     - nie ma mowy
     - nie zgadzam się
     - w żadnym wypadku
-
 - intent: inform
   examples: |
     - 74081109356
@@ -55,86 +48,72 @@ nlu:
     - A 00 001 94 30 08
     - A 0 0 0 0 1 9 4 3 0 0 8
     - A00001943008
-
 - intent: annex
   examples: |
     - aneks
     - w sprawie aneksu
     - chodzi o aneks
-
 - intent: application
   examples: |
     - aplikacja
     - w sprawie aaplikacji
     - chodzi o aplikację
-
 - intent: faq/annex_comment
   examples: |
     - gdzie można wpisać komentarz do aneksu
     - miejsce na wpisanie komentarza do aneksu
     - chciałbym wpisać komentarz do aneksu
-
 - intent: faq/annex_resend
   examples: |
     - w jaki sposób ponownie wysłać aneks
     - chciałbym wysłać ponownie aneks
     - jak ponowić wysyłkę aneksu
-
 - intent: faq/annex_types
   examples: |
     - jakie są dostępne aneksy
     - jakie są rodzaje aneksów
-
 - intent: faq/annex_recalculation
   examples: |
     - aneks rekalkulacyjny
     - w sprawie aneksu rekalkulacyjnego
-
 - intent: faq/annex_creation
   examples: |
     - jak wystawić aneks
     - jak zrobić aneks
-
+    - chciałbym wystawić aneks
+    - chciałbym zrobić dodatek do umowy
 - intent: faq/annex_extra_smart
   examples: |
     - jak wystawić aneks ekstrabiznes
     - jak wystawić aneks smartbiznes
-
 - intent: faq/annex_attachment
   examples: |
     - dodawanie załącznika do aneksu
     - jak dodać załącznik do aneksu
-
 - intent: faq/annex_foreign_approval
   examples: |
     - jak zatwierdzić aneks wystawiony do polisy obcej
     - aneks do polisy obcej zatwierdzenie
-
 - intent: faq/application_aztec
   examples: |
     - jak zeskanować kod aztec
     - zeskanowanie kodu aztec
-
 - intent: faq/application_load_screen
   examples: |
     - ekran ładowania przy przejściu między formularzami
     - ekran ładowania przy przejściu między polami
-
 - intent: faq/application_browser
   examples: |
     - jakie przeglądarki obsługują system
     - jakie przeglądarki są wspierane
-
 - intent: faq/application_login
   examples: |
     - login do systemu e agent
     - jak się zalogować do e agent
-
 - intent: faq/application_login_error
   examples: |
     - błąd podczas logowania
     - nie mogę się zalogować
-
 - intent: faq/application_multi_login
   examples: |
     - jednoczesne zalogowanie na kilku urządzeniach
@@ -143,13 +122,12 @@ nlu:
     - czy można się jednocześnie zalogować na kilku urządzeniach
     - czy można się jednocześnie zalogować na kilku przeglądarkach
     - czy można się jednocześnie zalogować na kilku kartach
-
 - intent: faq/application_slow
   examples: |
     - wolne działanie aplikacji
     - aplikacja działa wolno
     - aplikacja działa powoli
-
+    - wolno działa aplikacja
 - intent: agent_question_general
   examples: |
     - czy pojazd który był w leasingu jeśli faktura wykupu będzie to czy OC się rozwiąże, czy się wznowi
@@ -167,7 +145,7 @@ nlu:
     - wysłałem polisę zdalną i zrobiłem literówkę w @ czy mogę to jakoś zmienić
     - korzystam z portalu warta dla agentów, nie widzę tutaj możliwości samodzielnej wyceny pojazdu w info expert
     - nie widzę możliwości samodzielnej wyceny pojazdu w programie
-
+    - gdzie ubezpieczyć samochód?
 - intent: agent_question_payments
   examples: |
     - wie pani co, klient dostaje wezwanie o zadłużenie do polisy, chodzi o polisę, czy jest opłacona
@@ -183,7 +161,7 @@ nlu:
     - mój numer agenta to [a 00 02 19 430 06](given_agent_number), chciałbym się podpytać o jedną polisę, płatność na niej
     - mój numer agenta to [a 000 21 94 30 06](given_agent_number), chciałbym sprawdzić płatności dla polisy
     - z tej strony pośrednik o numerze [a 0 0 0 2 1 9 4 3 0 0 6](given_agent_number), chciałabym dopytać o płatności na polisie klienta
-
+    - Chciałbym zapytać o płatności do polisy
 - intent: agent_question_validity
   examples: |
     - chciałbym zapytać czy polisa jest aktywna
@@ -195,10 +173,3 @@ nlu:
     - anulowałam polisę i zrobiłam w to miejsce drugą, chciałabym sprawdzić czy jest anulowana
     - chodzi mi o takie sprawdzenie, tam klientka składala prośbę o zamknięcie polisy AC z dobrowolnego ryzyka. Wysłałam to 12 lutego i nie mam informacji zwrotnej
     - chciałbym sprawdzić okres ubepzieczenia polisy, klient nabył auto, ale zrobił polise gdzie indziej, ale przychodzi mu SMS o niedopłacie
-
-
-
-
-
-
-
