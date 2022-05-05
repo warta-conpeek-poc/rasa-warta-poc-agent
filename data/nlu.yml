@@ -4,6 +4,7 @@ nlu:
   examples: |
     - __PEER_CONNECTED__
     - __peer_connected__
+    - peer_connect
 - intent: disconnected
   examples: |
     - __PEER_DISCONNECTED__
