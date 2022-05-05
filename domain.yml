@@ -146,7 +146,9 @@ responses:
       blocks:
       - sentence_end_silence_time: 1800
         sentence_time_max: 30000
-        text: W czym mogę pomóc?
+        text: 
+          - plain: W czym mogę pomóc?
+          - plain: Jak mogę pomóc?
   - channel: conpeek-text
     custom:
       blocks:
@@ -160,7 +162,9 @@ responses:
           title: Sprawdzenie ważności polisy
         - payload: /agent_question_payments
           title: Sprawdzenie płatności dla polisy
-        text: W czym mogę pomóc?
+        text: 
+          - plain: W czym mogę pomóc?
+          - plain: Jak mogę pomóc?
         typing_delay: 1000
   - text: W czym mogę pomóc?
   utter_disconnected:
